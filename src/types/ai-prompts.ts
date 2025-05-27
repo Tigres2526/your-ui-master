@@ -18,3 +18,16 @@ export interface StylePromptConfig {
   bestPractices: string[]
   commonMistakes: string[]
 }
+
+export interface DesignSystemPrompts {
+  id: string
+  name: string
+  quickPrompts: Record<string, string>
+  detailedPrompts: Record<string, string>
+  contextualPrompts: Record<string, string>
+  best_practices: {
+    do: string[]
+    dont: string[]
+  }
+  customization_guide: string
+}
