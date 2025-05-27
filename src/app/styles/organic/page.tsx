@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import { Leaf, Droplets, Wind, Sun, Flower, Cloud } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -9,17 +10,15 @@ import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { ChevronLeft, Leaf, Droplets, Wind, Sun, Cloud, Flower } from 'lucide-react'
-import Link from 'next/link'
 
 export default function OrganicPage() {
   const [flowIntensity, setFlowIntensity] = useState([70])
   const [selectedBlob, setSelectedBlob] = useState(0)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-amber-50 relative overflow-hidden">
+    <div className="relative -m-6 p-6 min-h-[calc(100vh-4rem)] bg-gradient-to-br from-green-50 via-blue-50 to-amber-50 overflow-hidden">
       {/* Floating Blobs Background */}
-      <div className="fixed inset-0">
+      <div className="fixed inset-0 -z-10 pointer-events-none">
         <motion.div
           className="absolute w-96 h-96 rounded-full bg-gradient-to-br from-green-200/30 to-emerald-300/30 blur-3xl"
           animate={{
@@ -61,16 +60,10 @@ export default function OrganicPage() {
         />
       </div>
 
-      {/* Header */}
-      <header className="relative z-10 p-6 backdrop-blur-sm bg-white/30 border-b border-white/20">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link href="/styles" className="inline-flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors">
-            <ChevronLeft className="w-5 h-5" />
-            <span className="font-medium">Back to Styles</span>
-          </Link>
-          <h1 className="text-3xl font-bold text-gray-800">Organic Design</h1>
-        </div>
-      </header>
+      {/* Page Title */}
+      <div className="relative z-10 mb-8">
+        <h1 className="text-3xl font-bold text-gray-800">Organic Design</h1>
+      </div>
 
       <main className="relative z-10 max-w-6xl mx-auto p-6 space-y-12">
         {/* Design Principles */}

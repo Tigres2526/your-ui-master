@@ -2,13 +2,12 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import { SkipForward, Pause, Play, Volume2, Home, User, Heart, Settings } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
-import { ChevronLeft, Play, Pause, SkipForward, Volume2, Settings, Home, User, Heart } from 'lucide-react'
-import Link from 'next/link'
 
 export default function Skeuomorphism2Page() {
   const [isPlaying, setIsPlaying] = useState(false)
@@ -16,18 +15,11 @@ export default function Skeuomorphism2Page() {
   const [switchOn, setSwitchOn] = useState(false)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-200 to-gray-300">
-      {/* Header */}
-      <header className="relative p-6 bg-gradient-to-b from-gray-100 to-gray-200 shadow-lg">
-        <div className="absolute inset-0 bg-noise opacity-5"></div>
-        <div className="relative max-w-6xl mx-auto flex items-center justify-between">
-          <Link href="/styles" className="inline-flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors">
-            <ChevronLeft className="w-5 h-5" />
-            <span className="font-medium">Back to Styles</span>
-          </Link>
-          <h1 className="text-3xl font-bold text-gray-800">Skeuomorphism 2.0</h1>
-        </div>
-      </header>
+    <div className="relative -m-6 p-6 min-h-[calc(100vh-4rem)] bg-gradient-to-br from-gray-200 to-gray-300">
+      {/* Page Title */}
+      <div className="relative mb-8">
+        <h1 className="text-3xl font-bold text-gray-800">Skeuomorphism 2.0</h1>
+      </div>
 
       <main className="max-w-6xl mx-auto p-6 space-y-12">
         {/* Design Principles */}

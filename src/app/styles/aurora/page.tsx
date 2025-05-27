@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -9,58 +9,62 @@ import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { ChevronLeft, Sparkles, Moon, Star, CloudSnow, Wind } from 'lucide-react'
-import Link from 'next/link'
+import { Sparkles, Moon, Star, CloudSnow, Wind } from 'lucide-react'
 
 export default function AuroraUIPage() {
   const [intensity, setIntensity] = useState([70])
   const [activeTheme, setActiveTheme] = useState('northern')
 
+  // Memoize star positions for performance
+  const stars = useMemo(() => 
+    Array.from({ length: 50 }, (_, i) => ({
+      left: `${(i * 37) % 100}%`,
+      top: `${(i * 23) % 100}%`,
+      animationDelay: `${i % 5}s`,
+      animationDuration: `${3 + (i % 4)}s`
+    })), []
+  )
+
+  // Safe intensity handler with validation
+  const handleIntensityChange = (value: number[]) => {
+    const safeValue = value.map(v => Math.max(0, Math.min(100, v)))
+    setIntensity(safeValue)
+  }
+
+  // Safe opacity calculation
+  const safeOpacity = Math.max(0, Math.min(1, intensity[0] / 100))
+
   return (
-    <div className="min-h-screen bg-slate-950 overflow-hidden relative">
+    <div className="relative overflow-hidden -m-6 p-6 min-h-[calc(100vh-4rem)] bg-slate-950">
       {/* Aurora Background */}
-      <div className="fixed inset-0 opacity-50">
+      <div className="fixed inset-0 opacity-50 -z-10 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-purple-500/20 to-pink-500/20 blur-3xl animate-aurora-1"></div>
         <div className="absolute inset-0 bg-gradient-to-tl from-blue-500/20 via-emerald-500/20 to-violet-500/20 blur-3xl animate-aurora-2"></div>
         <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 via-pink-500/20 to-cyan-500/20 blur-3xl animate-aurora-3"></div>
       </div>
 
       {/* Stars */}
-      <div className="fixed inset-0">
-        {[...Array(50)].map((_, i) => {
-          // Deterministic star positions using index-based calculations
-          const left = ((i * 37) % 100) // Prime number for better distribution
-          const top = ((i * 23) % 100)  // Different prime for Y axis
-          const delay = (i % 5) // 0-4 seconds delay
-          const duration = 3 + (i % 4) // 3-6 seconds duration
-          
-          return (
-            <div
-              key={i}
-              className="absolute w-1 h-1 bg-white rounded-full animate-twinkle"
-              style={{
-                left: `${left}%`,
-                top: `${top}%`,
-                animationDelay: `${delay}s`,
-                animationDuration: `${duration}s`
-              }}
-            />
-          )
-        })}
+      <div className="fixed inset-0 -z-10 pointer-events-none">
+        {stars.map((star, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-white rounded-full animate-twinkle"
+            style={{
+              left: star.left,
+              top: star.top,
+              animationDelay: star.animationDelay,
+              animationDuration: star.animationDuration
+            }}
+          />
+        ))}
       </div>
 
-      {/* Header */}
-      <header className="relative z-10 p-6 backdrop-blur-sm bg-white/5 border-b border-white/10">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link href="/styles" className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors">
-            <ChevronLeft className="w-5 h-5" />
-            <span className="font-medium">Back to Styles</span>
-          </Link>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-            Aurora UI
-          </h1>
-        </div>
-      </header>
+      {/* Page Title */}
+      <div className="relative z-10 text-center mb-12">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+          Aurora UI
+        </h1>
+      </div>
 
       <main className="relative z-10 max-w-6xl mx-auto p-6 space-y-12">
         {/* Design Principles */}
@@ -100,7 +104,10 @@ export default function AuroraUIPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <button
               onClick={() => setActiveTheme('northern')}
-              className={`relative h-32 rounded-2xl overflow-hidden transition-all ${
+              onKeyDown={(e) => e.key === 'Enter' && setActiveTheme('northern')}
+              aria-label="Select Northern Aurora theme"
+              aria-pressed={activeTheme === 'northern'}
+              className={`relative h-32 rounded-2xl overflow-hidden transition-all focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-950 ${
                 activeTheme === 'northern' ? 'ring-2 ring-white ring-offset-2 ring-offset-slate-950' : ''
               }`}
             >
@@ -110,7 +117,10 @@ export default function AuroraUIPage() {
             </button>
             <button
               onClick={() => setActiveTheme('sunset')}
-              className={`relative h-32 rounded-2xl overflow-hidden transition-all ${
+              onKeyDown={(e) => e.key === 'Enter' && setActiveTheme('sunset')}
+              aria-label="Select Sunset Aurora theme"
+              aria-pressed={activeTheme === 'sunset'}
+              className={`relative h-32 rounded-2xl overflow-hidden transition-all focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-950 ${
                 activeTheme === 'sunset' ? 'ring-2 ring-white ring-offset-2 ring-offset-slate-950' : ''
               }`}
             >
@@ -120,7 +130,10 @@ export default function AuroraUIPage() {
             </button>
             <button
               onClick={() => setActiveTheme('ocean')}
-              className={`relative h-32 rounded-2xl overflow-hidden transition-all ${
+              onKeyDown={(e) => e.key === 'Enter' && setActiveTheme('ocean')}
+              aria-label="Select Ocean Aurora theme"
+              aria-pressed={activeTheme === 'ocean'}
+              className={`relative h-32 rounded-2xl overflow-hidden transition-all focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-950 ${
                 activeTheme === 'ocean' ? 'ring-2 ring-white ring-offset-2 ring-offset-slate-950' : ''
               }`}
             >
@@ -130,7 +143,10 @@ export default function AuroraUIPage() {
             </button>
             <button
               onClick={() => setActiveTheme('galaxy')}
-              className={`relative h-32 rounded-2xl overflow-hidden transition-all ${
+              onKeyDown={(e) => e.key === 'Enter' && setActiveTheme('galaxy')}
+              aria-label="Select Galaxy Aurora theme"
+              aria-pressed={activeTheme === 'galaxy'}
+              className={`relative h-32 rounded-2xl overflow-hidden transition-all focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-950 ${
                 activeTheme === 'galaxy' ? 'ring-2 ring-white ring-offset-2 ring-offset-slate-950' : ''
               }`}
             >
@@ -213,13 +229,16 @@ export default function AuroraUIPage() {
                 </div>
                 <Slider
                   value={intensity}
-                  onValueChange={setIntensity}
+                  onValueChange={handleIntensityChange}
+                  min={0}
+                  max={100}
+                  step={1}
                   className="[&_[role=slider]]:bg-gradient-to-r [&_[role=slider]]:from-cyan-400 [&_[role=slider]]:to-purple-600 [&_[role=slider]]:border-0 [&_[role=slider]]:shadow-lg [&_[role=slider]]:shadow-purple-500/50 [&_.relative]:bg-white/20"
                 />
                 <div className="h-20 rounded-2xl relative overflow-hidden">
                   <div 
                     className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 animate-aurora-slow"
-                    style={{ opacity: intensity[0] / 100 }}
+                    style={{ opacity: safeOpacity }}
                   ></div>
                 </div>
               </div>

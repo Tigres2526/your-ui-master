@@ -18,6 +18,14 @@ import {
   Volume2
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { AIPromptGenerator } from "@/components/ai-prompt-generator"
+import { NeuShowcase } from "@/components/neumorphism/neu-showcase"
+import { DesignTokenGenerator } from "@/components/design-token-generator"
+import { PatternLibrary } from "@/components/pattern-library"
+import { ExportManager } from "@/components/export-manager"
+import { NeumorphismPlayground } from "@/components/playground/neumorphism-playground"
+import { ImplementationGuide } from "@/components/implementation-guide"
+import { ProjectStarter } from "@/components/project-starter"
 
 const neuBase = "bg-[#e0e5ec]"
 const neuShadowRaised = "shadow-[9px_9px_16px_#a3b1c6,-9px_-9px_16px_#ffffff]"
@@ -472,6 +480,40 @@ export default function NeumorphismPage() {
           </div>
         </CardContent>
       </Card>
+
+      {/* AI Prompt Generator */}
+      <AIPromptGenerator style="neumorphism" />
+
+      {/* Comprehensive Component Library */}
+      <NeuShowcase />
+
+      {/* Design Token Generator */}
+      <DesignTokenGenerator style="neumorphism" />
+
+      {/* Interactive Playground */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-2xl">Interactive Playground</CardTitle>
+          <CardDescription>
+            Experiment with components in real-time. Adjust properties, see live previews, and export your customized code.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <NeumorphismPlayground />
+        </CardContent>
+      </Card>
+
+      {/* Pattern Library */}
+      <PatternLibrary style="neumorphism" />
+
+      {/* Implementation Guide */}
+      <ImplementationGuide style="neumorphism" />
+
+      {/* Export Manager */}
+      <ExportManager style="neumorphism" />
+
+      {/* Project Starters */}
+      <ProjectStarter style="neumorphism" />
     </div>
   )
 }

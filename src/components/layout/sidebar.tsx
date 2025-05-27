@@ -108,12 +108,14 @@ export function Sidebar() {
   return (
     <div className="w-64 border-r bg-background">
       <div className="p-6">
-        <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-          Your UI Master
-        </h2>
-        <p className="text-sm text-muted-foreground mt-1">
-          Design System Showcase
-        </p>
+        <Link href="/" className="block group">
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent group-hover:from-purple-700 group-hover:to-pink-700 transition-all">
+            Your UI Master
+          </h2>
+          <p className="text-sm text-muted-foreground mt-1 group-hover:text-foreground transition-colors">
+            Design System Showcase
+          </p>
+        </Link>
       </div>
       <ScrollArea className="h-[calc(100vh-88px)]">
         <div className="px-3 py-2">

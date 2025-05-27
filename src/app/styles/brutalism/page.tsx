@@ -2,30 +2,23 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import { ArrowRight, Zap, Shield, Rocket } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
-import { ChevronLeft, ArrowRight, Zap, Shield, Rocket } from 'lucide-react'
-import Link from 'next/link'
 
 export default function BrutalismPage() {
   const [activeTab, setActiveTab] = useState('raw')
   const [hoverIndex, setHoverIndex] = useState<number | null>(null)
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="border-b-8 border-black bg-yellow-400 p-6">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link href="/styles" className="inline-flex items-center gap-2 bg-black text-white px-4 py-2 hover:bg-red-600 transition-colors">
-            <ChevronLeft className="w-5 h-5" />
-            <span className="font-black uppercase">Back</span>
-          </Link>
-          <h1 className="text-6xl font-black uppercase tracking-tight">BRUTALISM</h1>
-        </div>
-      </header>
+    <div className="relative -m-6 p-6 min-h-[calc(100vh-4rem)] bg-white">
+      {/* Page Title */}
+      <div className="mb-8">
+        <h1 className="text-6xl font-black uppercase tracking-tight">BRUTALISM</h1>
+      </div>
 
       <main className="max-w-6xl mx-auto p-6 space-y-16">
         {/* Design Principles */}

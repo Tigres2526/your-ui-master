@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import { Palette, Sparkles, Settings, Sun, Moon, Heart, Share2, Bookmark } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -9,8 +10,6 @@ import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { ChevronLeft, Palette, Sparkles, Moon, Sun, Image, Settings, Heart, Share2, Bookmark } from 'lucide-react'
-import Link from 'next/link'
 
 export default function MaterialYouPage() {
   const [selectedTheme, setSelectedTheme] = useState('ocean')
@@ -51,7 +50,7 @@ export default function MaterialYouPage() {
   const currentTheme = themes[selectedTheme as keyof typeof themes]
 
   return (
-    <div className={`min-h-screen transition-colors duration-500 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`relative -m-6 p-6 min-h-[calc(100vh-4rem)] transition-colors duration-500 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
       {/* Dynamic Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -84,16 +83,10 @@ export default function MaterialYouPage() {
         />
       </div>
 
-      {/* Header */}
-      <header className={`relative z-10 p-6 ${isDark ? 'bg-gray-900/80' : 'bg-white/80'} backdrop-blur-md border-b ${isDark ? 'border-gray-800' : 'border-gray-200'}`}>
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link href="/styles" className={`inline-flex items-center gap-2 ${isDark ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-gray-900'} transition-colors`}>
-            <ChevronLeft className="w-5 h-5" />
-            <span className="font-medium">Back to Styles</span>
-          </Link>
-          <h1 className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>Material You</h1>
-        </div>
-      </header>
+      {/* Page Title */}
+      <div className="relative z-10 mb-8">
+        <h1 className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>Material You</h1>
+      </div>
 
       <main className="relative z-10 max-w-6xl mx-auto p-6 space-y-12">
         {/* Design Principles */}
@@ -123,7 +116,7 @@ export default function MaterialYouPage() {
                   className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4"
                   style={{ backgroundColor: currentTheme.secondary + '20' }}
                 >
-                  <Image className="w-6 h-6" style={{ color: currentTheme.secondary }} />
+                  <Palette className="w-6 h-6" style={{ color: currentTheme.secondary }} />
                 </div>
                 <h3 className={`font-semibold text-lg ${isDark ? 'text-white' : 'text-gray-900'} mb-2`}>Adaptive Design</h3>
                 <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>

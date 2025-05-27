@@ -1,21 +1,20 @@
 'use client'
 
 import React, { useState } from 'react'
+import { Grid3x3, Type, Minus, Plus, AlignLeft, AlignCenter, AlignRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { ChevronLeft, Grid3x3, Type, Minus, Plus, AlignLeft, AlignCenter, AlignRight } from 'lucide-react'
-import Link from 'next/link'
 
 export default function SwissDesignPage() {
   const [gridColumns, setGridColumns] = useState(12)
   const [alignment, setAlignment] = useState('left')
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="relative -m-6 p-6 min-h-[calc(100vh-4rem)] bg-white">
       {/* Grid Overlay */}
       <div className="fixed inset-0 pointer-events-none opacity-10">
         <div className="h-full max-w-6xl mx-auto grid grid-cols-12 gap-4 px-6">
@@ -25,16 +24,10 @@ export default function SwissDesignPage() {
         </div>
       </div>
 
-      {/* Header */}
-      <header className="relative p-6 border-b border-gray-200">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link href="/styles" className="inline-flex items-center gap-2 text-gray-900 hover:text-gray-700 transition-colors">
-            <ChevronLeft className="w-5 h-5" />
-            <span className="text-sm">Back to Styles</span>
-          </Link>
-          <h1 className="text-2xl font-light tracking-tight">Swiss Design</h1>
-        </div>
-      </header>
+      {/* Page Title */}
+      <div className="relative mb-8">
+        <h1 className="text-3xl font-bold">Swiss Design</h1>
+      </div>
 
       <main className="relative max-w-6xl mx-auto p-6 space-y-24">
         {/* Design Principles */}

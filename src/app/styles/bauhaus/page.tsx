@@ -2,30 +2,23 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import { Square, Circle, Triangle, Minus, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
-import { ChevronLeft, Square, Circle, Triangle, Minus, Plus } from 'lucide-react'
-import Link from 'next/link'
 
 export default function BauhausPage() {
   const [activeShape, setActiveShape] = useState('square')
   const [gridSize, setGridSize] = useState(4)
 
   return (
-    <div className="min-h-screen bg-stone-50">
-      {/* Header */}
-      <header className="p-6 bg-white border-b-4 border-black">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link href="/styles" className="inline-flex items-center gap-2 text-black hover:text-gray-700 transition-colors">
-            <ChevronLeft className="w-5 h-5" />
-            <span className="font-medium">Back to Styles</span>
-          </Link>
-          <h1 className="text-3xl font-bold tracking-tight">BAUHAUS</h1>
-        </div>
-      </header>
+    <div className="relative -m-6 p-6 min-h-[calc(100vh-4rem)] bg-stone-50">
+      {/* Page Title */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold tracking-tight">BAUHAUS</h1>
+      </div>
 
       <main className="max-w-6xl mx-auto p-6 space-y-12">
         {/* Design Principles */}

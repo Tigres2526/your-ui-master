@@ -8,24 +8,49 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { Slider } from "@/components/ui/slider"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Progress } from "@/components/ui/progress"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { 
   Sparkles,
   ArrowRight,
   Cloud,
   Star,
-  Lock,
-  Mail,
   Bell,
   Search,
   Menu,
   X
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { AIPromptGenerator } from "@/components/ai-prompt-generator"
+import { GlassShowcase } from "@/components/glassmorphism/glass-showcase"
+import { DesignTokenGenerator } from "@/components/design-token-generator"
+import { PatternLibrary } from "@/components/pattern-library"
+import { ImplementationGuide } from "@/components/implementation-guide"
+import { ExportManager } from "@/components/export-manager"
+import { InteractivePlayground } from "@/components/interactive-playground"
+import { GlassButton } from "@/components/glassmorphism/glass-button"
+import { ProjectStarter } from "@/components/project-starter"
 
 export default function GlassmorphismPage() {
   const [blurIntensity, setBlurIntensity] = useState([16])
   const [opacity, setOpacity] = useState([25])
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  // Safe handlers with validation
+  const handleBlurChange = (value: number[]) => {
+    const safeValue = value.map(v => Math.max(0, Math.min(32, v)))
+    setBlurIntensity(safeValue)
+  }
+
+  const handleOpacityChange = (value: number[]) => {
+    const safeValue = value.map(v => Math.max(0, Math.min(100, v)))
+    setOpacity(safeValue)
+  }
+
+  // Safe style calculations
+  const safeOpacity = Math.max(0, Math.min(1, opacity[0] / 100))
+  const safeBlur = Math.max(0, Math.min(32, blurIntensity[0]))
 
   return (
     <div className="space-y-12">
@@ -88,9 +113,10 @@ export default function GlassmorphismPage() {
             </div>
             <Slider 
               value={blurIntensity} 
-              onValueChange={setBlurIntensity}
+              onValueChange={handleBlurChange}
               max={32}
               min={0}
+              step={1}
               className="[&_[role=slider]]:bg-white/50"
             />
           </div>
@@ -101,20 +127,21 @@ export default function GlassmorphismPage() {
             </div>
             <Slider 
               value={opacity} 
-              onValueChange={setOpacity}
+              onValueChange={handleOpacityChange}
               max={50}
               min={5}
+              step={1}
               className="[&_[role=slider]]:bg-white/50"
             />
           </div>
           <div 
             className={cn(
               "p-6 rounded-xl border border-white/20 text-foreground text-center",
-              `backdrop-blur-[${blurIntensity[0]}px]`
+              `backdrop-blur-[${safeBlur}px]`
             )}
             style={{
-              backgroundColor: `rgba(255, 255, 255, ${opacity[0] / 100})`,
-              backdropFilter: `blur(${blurIntensity[0]}px)`
+              backgroundColor: `rgba(255, 255, 255, ${safeOpacity})`,
+              backdropFilter: `blur(${safeBlur}px)`
             }}
           >
             Preview Glass Effect
@@ -125,24 +152,23 @@ export default function GlassmorphismPage() {
       {/* Button Showcase */}
       <ComponentShowcase
         title="Glass Buttons"
-        description="Translucent buttons with various glass effects"
+        description="Translucent buttons with various glass effects and intensities"
         category="Buttons"
         component={
           <div className="flex flex-wrap gap-4">
-            <button className="px-6 py-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-foreground font-medium transition-all hover:bg-white/20 hover:shadow-lg hover:scale-105 active:scale-95">
-              Glass Button
-            </button>
-            <button className="px-6 py-3 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-md border border-white/20 text-foreground font-medium transition-all hover:from-purple-500/30 hover:to-pink-500/30 hover:shadow-lg hover:scale-105 active:scale-95">
-              Gradient Glass
-            </button>
+            <Button className="bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-foreground">Default Glass</Button>
+            <Button variant="ghost" className="backdrop-blur-sm hover:bg-white/10 text-foreground">Ghost Glass</Button>
+            <Button variant="outline" className="border-white/20 backdrop-blur-sm hover:bg-white/10 text-foreground">Outline Glass</Button>
+            <Button className="bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 text-foreground">Subtle</Button>
+            <Button className="bg-white/20 backdrop-blur-xl border border-white/30 hover:bg-white/30 text-foreground">Strong</Button>
           </div>
         }
         code={{
-          react: `<button className="px-6 py-3 rounded-xl bg-white/10 backdrop-blur-md 
-         border border-white/20 text-foreground font-medium transition-all 
-         hover:bg-white/20 hover:shadow-lg hover:scale-105 active:scale-95">
-  Glass Button
-</button>`,
+          react: `<Button className="bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20">Default Glass</Button>
+<Button variant="ghost" className="backdrop-blur-sm hover:bg-white/10">Ghost Glass</Button>
+<Button variant="outline" className="border-white/20 backdrop-blur-sm hover:bg-white/10">Outline Glass</Button>
+<Button className="bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10">Subtle</Button>
+<Button className="bg-white/20 backdrop-blur-xl border border-white/30 hover:bg-white/30">Strong</Button>`,
           css: `.glass-button {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(16px);
@@ -163,31 +189,19 @@ export default function GlassmorphismPage() {
         }}
         variants={[
           {
-            name: "Primary",
-            component: (
-              <button className="px-6 py-3 rounded-xl bg-blue-500/20 backdrop-blur-md border border-blue-500/30 text-foreground font-medium">
-                Primary
-              </button>
-            ),
-            code: "Blue glass variant"
+            name: "Small",
+            component: <Button size="sm" className="bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-foreground">Small Button</Button>,
+            code: 'size="sm"'
           },
           {
-            name: "Success",
-            component: (
-              <button className="px-6 py-3 rounded-xl bg-green-500/20 backdrop-blur-md border border-green-500/30 text-foreground font-medium">
-                Success
-              </button>
-            ),
-            code: "Green glass variant"
+            name: "Large",
+            component: <Button size="lg" className="bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-foreground">Large Button</Button>,
+            code: 'size="lg"'
           },
           {
-            name: "Danger",
-            component: (
-              <button className="px-6 py-3 rounded-xl bg-red-500/20 backdrop-blur-md border border-red-500/30 text-foreground font-medium">
-                Danger
-              </button>
-            ),
-            code: "Red glass variant"
+            name: "Icon",
+            component: <Button size="icon" className="bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-foreground"><Search className="h-4 w-4" /></Button>,
+            code: 'size="icon"'
           }
         ]}
       />
@@ -195,36 +209,93 @@ export default function GlassmorphismPage() {
       {/* Card Showcase */}
       <ComponentShowcase
         title="Glass Cards"
-        description="Beautiful card components with glassmorphism effects"
+        description="Beautiful card components with glassmorphism effects and gradient options"
         category="Cards"
         component={
-          <Card className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-xl w-full max-w-sm">
-            <CardHeader>
-              <CardTitle className="text-foreground">Glass Card</CardTitle>
-              <CardDescription className="text-foreground/70">
-                A beautiful frosted glass card
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-foreground/80 text-sm">
-                This card features a glassmorphism effect with backdrop blur and transparency.
-              </p>
-            </CardContent>
-          </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+            <Card className="bg-white/10 backdrop-blur-md border border-white/20 w-full">
+              <CardHeader>
+                <CardTitle className="text-foreground">Glass Card</CardTitle>
+                <CardDescription className="text-foreground/70">
+                  A beautiful frosted glass card
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-foreground/80 text-sm">
+                  This card features a glassmorphism effect with backdrop blur and transparency.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-xl border border-white/30 shadow-2xl w-full">
+              <CardHeader>
+                <CardTitle className="text-foreground">Gradient Glass</CardTitle>
+                <CardDescription className="text-foreground/70">
+                  With vibrant gradient overlay
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-foreground/80 text-sm">
+                  Enhanced with colorful gradients for a more dynamic appearance.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         }
         code={{
-          react: `<Card className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-xl">
+          react: `<Card className="bg-white/10 backdrop-blur-md border border-white/20">
   <CardHeader>
-    <CardTitle className="text-foreground">Glass Card</CardTitle>
-    <CardDescription className="text-foreground/70">
-      Subtitle text
+    <CardTitle>Glass Card</CardTitle>
+    <CardDescription>
+      A beautiful frosted glass card
     </CardDescription>
   </CardHeader>
   <CardContent>
-    <p className="text-foreground/80">Card content goes here</p>
+    <p>Card content goes here</p>
   </CardContent>
+</Card>
+
+<Card className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-xl border border-white/30 shadow-2xl">
+  <CardHeader>
+    <CardTitle>Gradient Glass</CardTitle>
+  </CardHeader>
 </Card>`
         }}
+        variants={[
+          {
+            name: "Subtle",
+            component: (
+              <Card className="bg-white/5 backdrop-blur-sm border border-white/10 w-full max-w-sm">
+                <CardContent className="pt-6">
+                  <p className="text-foreground/70">Subtle glass effect</p>
+                </CardContent>
+              </Card>
+            ),
+            code: 'className="bg-white/5 backdrop-blur-sm"'
+          },
+          {
+            name: "Ultra",
+            component: (
+              <Card className="bg-white/25 backdrop-blur-2xl border border-white/40 w-full max-w-sm">
+                <CardContent className="pt-6">
+                  <p className="text-foreground/70">Ultra glass effect</p>
+                </CardContent>
+              </Card>
+            ),
+            code: 'className="bg-white/25 backdrop-blur-2xl"'
+          },
+          {
+            name: "Aurora",
+            component: (
+              <Card className="bg-gradient-to-br from-purple-500/10 via-pink-500/10 to-blue-500/10 backdrop-blur-md border border-white/20 w-full max-w-sm">
+                <CardContent className="pt-6">
+                  <p className="text-foreground/70">Aurora gradient</p>
+                </CardContent>
+              </Card>
+            ),
+            code: 'className="bg-gradient-to-br from-purple-500/10..."'
+          }
+        ]}
       />
 
       {/* Navigation Bar Example */}
@@ -288,26 +359,28 @@ export default function GlassmorphismPage() {
           <div className="space-y-4 w-full max-w-sm">
             <div className="space-y-2">
               <Label className="text-foreground">Email</Label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-foreground/50" />
-                <Input 
-                  placeholder="Enter your email"
-                  className="bg-white/10 backdrop-blur-md border-white/20 text-foreground placeholder:text-foreground/50 pl-10 focus:bg-white/20 focus:border-white/40"
-                />
-              </div>
+              <Input 
+                className="bg-white/10 backdrop-blur-md border-white/20 placeholder:text-foreground/50 text-foreground"
+                placeholder="Enter your email"
+                type="email"
+              />
             </div>
             <div className="space-y-2">
               <Label className="text-foreground">Password</Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-foreground/50" />
-                <Input 
-                  type="password"
-                  placeholder="Enter password"
-                  className="bg-white/10 backdrop-blur-md border-white/20 text-foreground placeholder:text-foreground/50 pl-10 focus:bg-white/20 focus:border-white/40"
-                />
-              </div>
+              <Input 
+                className="bg-white/20 backdrop-blur-md border-white/30 placeholder:text-foreground/50 text-foreground"
+                type="password"
+                placeholder="Enter password"
+              />
             </div>
-            <Button className="w-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-md border border-white/20 text-foreground hover:from-purple-500/30 hover:to-pink-500/30">
+            <div className="space-y-2">
+              <Label className="text-foreground">Search</Label>
+              <Input 
+                className="bg-white/5 backdrop-blur-sm border-white/10 placeholder:text-foreground/50 text-foreground"
+                placeholder="Search..."
+              />
+            </div>
+            <Button className="w-full bg-white/20 backdrop-blur-xl border border-white/30 hover:bg-white/30 text-foreground">
               Sign In
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
@@ -315,11 +388,220 @@ export default function GlassmorphismPage() {
         }
         code={{
           react: `<Input 
-  placeholder="Enter text"
-  className="bg-white/10 backdrop-blur-md border-white/20 
-             text-foreground placeholder:text-foreground/50 
-             focus:bg-white/20 focus:border-white/40"
+  className="bg-white/10 backdrop-blur-md border-white/20 placeholder:text-foreground/50"
+  placeholder="Enter your email"
+  type="email"
+/>
+
+<Input 
+  className="bg-white/20 backdrop-blur-md border-white/30 placeholder:text-foreground/50"
+  type="password"
+  placeholder="Enter password"
+/>
+
+<Input 
+  className="bg-white/5 backdrop-blur-sm border-white/10 placeholder:text-foreground/50"
+  placeholder="Search..."
 />`
+        }}
+        variants={[
+          {
+            name: "Small Input",
+            component: <Input className="bg-white/10 backdrop-blur-md border-white/20 h-8 text-sm w-48" placeholder="Small input" />,
+            code: 'className="h-8 text-sm"'
+          },
+          {
+            name: "Large Input",
+            component: <Input className="bg-white/10 backdrop-blur-md border-white/20 h-12 text-lg w-48" placeholder="Large input" />,
+            code: 'className="h-12 text-lg"'
+          },
+          {
+            name: "Strong Intensity",
+            component: <Input className="bg-white/20 backdrop-blur-xl border-white/30 w-48" placeholder="Strong glass" />,
+            code: 'className="bg-white/20 backdrop-blur-xl"'
+          }
+        ]}
+      />
+
+      {/* Glass Badges Showcase */}
+      <ComponentShowcase
+        title="Glass Badges"
+        description="Beautiful badges with glassmorphism effects"
+        category="Feedback"
+        component={
+          <div className="flex flex-wrap gap-3">
+            <Badge className="bg-white/10 backdrop-blur-md border-white/20 text-foreground">Default</Badge>
+            <Badge variant="secondary" className="bg-white/5 backdrop-blur-sm border-white/10">Secondary</Badge>
+            <Badge variant="destructive" className="bg-red-500/20 backdrop-blur-md border-red-500/30">Destructive</Badge>
+            <Badge variant="outline" className="border-white/20 backdrop-blur-sm">Outline</Badge>
+            <Badge className="bg-green-500/20 backdrop-blur-md border-green-500/30 text-green-400">Success</Badge>
+            <Badge className="bg-yellow-500/20 backdrop-blur-md border-yellow-500/30 text-yellow-400">Warning</Badge>
+          </div>
+        }
+        code={{
+          react: `<Badge className="bg-white/10 backdrop-blur-md border-white/20">Default</Badge>
+<Badge variant="secondary" className="bg-white/5 backdrop-blur-sm">Secondary</Badge>
+<Badge variant="destructive" className="bg-red-500/20 backdrop-blur-md">Destructive</Badge>
+<Badge className="bg-green-500/20 backdrop-blur-md border-green-500/30 text-green-400">Success</Badge>
+<Badge className="bg-yellow-500/20 backdrop-blur-md border-yellow-500/30 text-yellow-400">Warning</Badge>`
+        }}
+        variants={[
+          {
+            name: "Sizes",
+            component: (
+              <div className="flex gap-2 items-center">
+                <Badge className="bg-white/10 backdrop-blur-md border-white/20 text-xs py-0 px-2">Small</Badge>
+                <Badge className="bg-white/10 backdrop-blur-md border-white/20">Default</Badge>
+                <Badge className="bg-white/10 backdrop-blur-md border-white/20 text-base py-1 px-3">Large</Badge>
+              </div>
+            ),
+            code: 'Different size classes'
+          },
+          {
+            name: "Intensities",
+            component: (
+              <div className="flex gap-2">
+                <Badge className="bg-white/5 backdrop-blur-sm border-white/10">Subtle</Badge>
+                <Badge className="bg-white/10 backdrop-blur-md border-white/20">Medium</Badge>
+                <Badge className="bg-white/20 backdrop-blur-xl border-white/30">Strong</Badge>
+              </div>
+            ),
+            code: 'intensity variations'
+          }
+        ]}
+      />
+
+      {/* Glass Tabs Showcase */}
+      <ComponentShowcase
+        title="Glass Tabs"
+        description="Tab navigation with glassmorphism styling"
+        category="Navigation"
+        component={
+          <Tabs defaultValue="tab1" className="w-full max-w-md">
+            <TabsList className="w-full bg-white/10 backdrop-blur-md border border-white/20">
+              <TabsTrigger value="tab1" className="flex-1 data-[state=active]:bg-white/20">Profile</TabsTrigger>
+              <TabsTrigger value="tab2" className="flex-1 data-[state=active]:bg-white/20">Settings</TabsTrigger>
+              <TabsTrigger value="tab3" className="flex-1 data-[state=active]:bg-white/20">Security</TabsTrigger>
+            </TabsList>
+            <TabsContent value="tab1" className="mt-4">
+              <div className="text-foreground">
+                <h3 className="font-semibold mb-2">Profile Information</h3>
+                <p className="text-foreground/70 text-sm">Manage your profile details and preferences.</p>
+              </div>
+            </TabsContent>
+            <TabsContent value="tab2" className="mt-4">
+              <div className="text-foreground">
+                <h3 className="font-semibold mb-2">Settings</h3>
+                <p className="text-foreground/70 text-sm">Configure your application settings.</p>
+              </div>
+            </TabsContent>
+            <TabsContent value="tab3" className="mt-4">
+              <div className="text-foreground">
+                <h3 className="font-semibold mb-2">Security</h3>
+                <p className="text-foreground/70 text-sm">Manage your security preferences.</p>
+              </div>
+            </TabsContent>
+          </Tabs>
+        }
+        code={{
+          react: `<Tabs defaultValue="tab1">
+  <TabsList className="bg-white/10 backdrop-blur-md border border-white/20">
+    <TabsTrigger value="tab1" className="data-[state=active]:bg-white/20">Profile</TabsTrigger>
+    <TabsTrigger value="tab2" className="data-[state=active]:bg-white/20">Settings</TabsTrigger>
+  </TabsList>
+  <TabsContent value="tab1">
+    <p>Profile content</p>
+  </TabsContent>
+  <TabsContent value="tab2">
+    <p>Settings content</p>
+  </TabsContent>
+</Tabs>`
+        }}
+      />
+
+      {/* Glass Progress Showcase */}
+      <ComponentShowcase
+        title="Glass Progress Bars"
+        description="Progress indicators with glassmorphism effects"
+        category="Feedback"
+        component={
+          <div className="space-y-4 w-full">
+            <Progress value={33} className="bg-white/10 backdrop-blur-md border border-white/20 [&>div]:bg-white/50" />
+            <Progress value={66} className="bg-white/20 backdrop-blur-xl border border-white/30 [&>div]:bg-white/70" />
+            <Progress value={50} className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-md border border-white/20 [&>div]:bg-gradient-to-r [&>div]:from-purple-500 [&>div]:to-pink-500" />
+            <Progress value={75} className="bg-white/10 backdrop-blur-md border border-white/20 [&>div]:bg-gradient-to-r [&>div]:from-blue-500 [&>div]:to-cyan-500 [&>div]:animate-pulse" />
+          </div>
+        }
+        code={{
+          react: `<Progress value={33} className="bg-white/10 backdrop-blur-md [&>div]:bg-white/50" />
+<Progress value={66} className="bg-white/20 backdrop-blur-xl [&>div]:bg-white/70" />
+<Progress value={50} className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 [&>div]:bg-gradient-to-r [&>div]:from-purple-500 [&>div]:to-pink-500" />
+<Progress value={75} className="[&>div]:bg-gradient-to-r [&>div]:from-blue-500 [&>div]:to-cyan-500 [&>div]:animate-pulse" />`
+        }}
+        variants={[
+          {
+            name: "Pulse",
+            component: <Progress value={80} className="bg-white/10 backdrop-blur-md [&>div]:bg-white/60 [&>div]:animate-pulse" />,
+            code: '[&>div]:animate-pulse'
+          },
+          {
+            name: "Subtle",
+            component: <Progress value={40} className="bg-white/5 backdrop-blur-sm [&>div]:bg-white/30" />,
+            code: 'bg-white/5 backdrop-blur-sm'
+          }
+        ]}
+      />
+
+      {/* Glass Modal Showcase */}
+      <ComponentShowcase
+        title="Glass Modal"
+        description="Modal dialogs with glassmorphism backdrop and content"
+        category="Overlays"
+        component={
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-foreground">Open Modal</Button>
+            </DialogTrigger>
+            <DialogContent className="bg-white/20 backdrop-blur-xl border border-white/30 text-foreground">
+              <DialogHeader>
+                <DialogTitle>Glass Modal</DialogTitle>
+                <DialogDescription className="text-foreground/70">
+                  This is a beautiful modal with glassmorphism effects. The backdrop is blurred and the content has a frosted glass appearance.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="py-4">
+                <p className="text-foreground/80 text-sm">
+                  Modal content can include any elements you need, all styled with consistent glass effects.
+                </p>
+              </div>
+              <DialogFooter>
+                <Button variant="ghost" className="backdrop-blur-sm hover:bg-white/10 text-foreground">Cancel</Button>
+                <Button className="bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-foreground">Continue</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        }
+        code={{
+          react: `<Dialog>
+  <DialogTrigger asChild>
+    <Button className="bg-white/10 backdrop-blur-md border border-white/20">Open Modal</Button>
+  </DialogTrigger>
+  <DialogContent className="bg-white/20 backdrop-blur-xl border border-white/30">
+    <DialogHeader>
+      <DialogTitle>Glass Modal</DialogTitle>
+      <DialogDescription>
+        Modal description text
+      </DialogDescription>
+    </DialogHeader>
+    <div className="py-4">
+      <p>Modal content</p>
+    </div>
+    <DialogFooter>
+      <Button variant="ghost" className="backdrop-blur-sm hover:bg-white/10">Cancel</Button>
+      <Button className="bg-white/10 backdrop-blur-md">Continue</Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>`
         }}
       />
 
@@ -454,6 +736,148 @@ export default function GlassmorphismPage() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Implementation Examples */}
+      <Card className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-xl">
+        <CardHeader>
+          <CardTitle className="text-foreground">Implementation Guide</CardTitle>
+          <CardDescription className="text-foreground/70">
+            CSS properties for glassmorphism effects
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="p-4 bg-black/20 rounded-lg font-mono text-sm text-foreground">
+              <p className="text-foreground/60 mb-2">{`/* Basic Glass Effect */`}</p>
+              <pre>{`.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+}`}</pre>
+            </div>
+            <div className="p-4 bg-black/20 rounded-lg font-mono text-sm text-foreground">
+              <p className="text-foreground/60 mb-2">{`/* Gradient Glass */`}</p>
+              <pre>{`.glass-gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(147, 51, 234, 0.2),
+    rgba(236, 72, 153, 0.2)
+  );
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}`}</pre>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* AI Prompt Generator */}
+      <AIPromptGenerator style="glassmorphism" />
+
+      {/* Comprehensive Component Library */}
+      <GlassShowcase />
+
+      {/* Design Token Generator */}
+      <DesignTokenGenerator style="glassmorphism" />
+
+      {/* Interactive Playground */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-2xl">Interactive Playground</CardTitle>
+          <CardDescription>
+            Experiment with glassmorphism components in real-time
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <InteractivePlayground
+            title="Glass Button Playground"
+            description="Customize and preview glass button variations"
+            component={GlassButton}
+            defaultProps={{
+              children: 'Glass Button',
+              variant: 'default',
+              size: 'default',
+              intensity: 'medium'
+            }}
+            controls={[
+              {
+                name: 'children',
+                label: 'Button Text',
+                type: 'text',
+                defaultValue: 'Glass Button'
+              },
+              {
+                name: 'variant',
+                label: 'Variant',
+                type: 'select',
+                defaultValue: 'default',
+                options: [
+                  { label: 'Default', value: 'default' },
+                  { label: 'Ghost', value: 'ghost' },
+                  { label: 'Outline', value: 'outline' }
+                ]
+              },
+              {
+                name: 'size',
+                label: 'Size',
+                type: 'select',
+                defaultValue: 'default',
+                options: [
+                  { label: 'Small', value: 'sm' },
+                  { label: 'Default', value: 'default' },
+                  { label: 'Large', value: 'lg' },
+                  { label: 'Icon', value: 'icon' }
+                ]
+              },
+              {
+                name: 'intensity',
+                label: 'Blur Intensity',
+                type: 'select',
+                defaultValue: 'medium',
+                options: [
+                  { label: 'Subtle', value: 'subtle' },
+                  { label: 'Medium', value: 'medium' },
+                  { label: 'Strong', value: 'strong' },
+                  { label: 'Ultra', value: 'ultra' }
+                ]
+              }
+            ]}
+            codeTemplate={(props) => {
+              const propsStr = Object.entries(props)
+                .filter(([key, value]) => {
+                  if (key === 'children') return false
+                  if (typeof value === 'boolean' && !value) return false
+                  if (value === 'default') return false
+                  return true
+                })
+                .map(([key, value]) => {
+                  if (typeof value === 'boolean') return key
+                  return `${key}="${value}"`
+                })
+                .join(' ')
+              
+              return `<GlassButton${propsStr ? ' ' + propsStr : ''}>${props.children}</GlassButton>`
+            }}
+            styleVariables={{
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+            }}
+          />
+        </CardContent>
+      </Card>
+
+      {/* Pattern Library */}
+      <PatternLibrary style="glassmorphism" />
+
+      {/* Implementation Guide */}
+      <ImplementationGuide style="glassmorphism" />
+
+      {/* Export Manager */}
+      <ExportManager style="glassmorphism" />
+
+      {/* Project Starters */}
+      <ProjectStarter style="glassmorphism" />
 
       <style jsx>{`
         @keyframes blob {

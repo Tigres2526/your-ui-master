@@ -2,13 +2,12 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import { Palette, Box, Layers, Sparkles, Star, Heart, Send } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
-import { ChevronLeft, Palette, Box, Layers, Sparkles, Heart, Star, Send } from 'lucide-react'
-import Link from 'next/link'
 
 export default function ClaymorphismPage() {
   const [depth, setDepth] = useState([50])
@@ -16,19 +15,13 @@ export default function ClaymorphismPage() {
   const [activeTab, setActiveTab] = useState('overview')
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50">
-      {/* Header */}
-      <header className="p-6 bg-white/40 backdrop-blur-sm border-b border-white/20">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link href="/styles" className="inline-flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors">
-            <ChevronLeft className="w-5 h-5" />
-            <span className="font-medium">Back to Styles</span>
-          </Link>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">
-            Claymorphism
-          </h1>
-        </div>
-      </header>
+    <div className="relative -m-6 p-6 min-h-[calc(100vh-4rem)] bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50">
+      {/* Page Title */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">
+          Claymorphism
+        </h1>
+      </div>
 
       <main className="max-w-6xl mx-auto p-6 space-y-12">
         {/* Design Principles */}

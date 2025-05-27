@@ -1,32 +1,20 @@
 'use client'
 
 import React from 'react'
+import { Zap, Home, Settings, Download, Upload, ChevronRight, Mail, Calendar, Clock, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { ChevronLeft, ChevronRight, Home, Settings, User, Mail, Calendar, Clock, Download, Upload, Zap } from 'lucide-react'
-import Link from 'next/link'
 
 export default function FluentDesignPage() {
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
-      {/* Navigation */}
-      <nav className="sticky top-0 z-10 backdrop-blur-xl bg-white/70 dark:bg-gray-900/70 border-b border-gray-200 dark:border-gray-700">
-        <div className="px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                <ChevronLeft className="h-5 w-5" />
-                <span className="font-medium">Back</span>
-              </Link>
-              <div className="h-6 w-px bg-gray-300 dark:bg-gray-600" />
-              <h1 className="text-xl font-semibold">Fluent Design</h1>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div className="relative -m-6 p-6 min-h-[calc(100vh-4rem)] bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+      {/* Page Title */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold">Fluent Design</h1>
+      </div>
 
       <div className="px-6 py-8 max-w-7xl mx-auto space-y-8">
         {/* Header */}

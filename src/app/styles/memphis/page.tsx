@@ -2,13 +2,12 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import { Zap, Star, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
-import { ChevronLeft, Zap, Star, Sparkles } from 'lucide-react'
-import Link from 'next/link'
 
 export default function MemphisPage() {
   const [activePattern, setActivePattern] = useState('squiggles')
@@ -38,9 +37,9 @@ export default function MemphisPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-pink-100 relative overflow-hidden">
+    <div className="relative -m-6 p-6 min-h-[calc(100vh-4rem)] bg-pink-100 overflow-hidden">
       {/* Background Pattern */}
-      <div className="fixed inset-0 opacity-20">
+      <div className="fixed inset-0 opacity-20 -z-10 pointer-events-none">
         {/* Squiggles */}
         <svg className="absolute top-10 left-10" width="100" height="100" viewBox="0 0 100 100">
           <path d="M10,50 Q30,10 50,50 T90,50" stroke="#00CED1" strokeWidth="4" fill="none" />
@@ -72,16 +71,10 @@ export default function MemphisPage() {
         </div>
       </div>
 
-      {/* Header */}
-      <header className="relative z-10 p-6 bg-yellow-300 border-b-4 border-black">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link href="/styles" className="inline-flex items-center gap-2 bg-black text-white px-4 py-2 hover:bg-purple-600 transition-colors">
-            <ChevronLeft className="w-5 h-5" />
-            <span className="font-black">BACK</span>
-          </Link>
-          <h1 className="text-4xl font-black text-black transform -rotate-2">MEMPHIS DESIGN</h1>
-        </div>
-      </header>
+      {/* Page Title */}
+      <div className="relative z-10 mb-8">
+        <h1 className="text-4xl font-black text-black transform -rotate-2">MEMPHIS DESIGN</h1>
+      </div>
 
       <main className="relative z-10 max-w-6xl mx-auto p-6 space-y-12">
         {/* Design Principles */}

@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { StyleErrorBoundary } from "@/components/error-boundary"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -116,14 +117,14 @@ export function ComponentShowcase({
                     {control.type === 'switch' && (
                       <Switch
                         id={control.id}
-                        checked={control.value}
+                        checked={typeof control.value === 'boolean' ? control.value : false}
                         onCheckedChange={control.onChange}
                       />
                     )}
                     {control.type === 'slider' && (
                       <Slider
                         id={control.id}
-                        value={[control.value]}
+                        value={[typeof control.value === 'number' ? control.value : 0]}
                         onValueChange={([value]) => control.onChange(value)}
                         min={control.min}
                         max={control.max}
@@ -146,6 +147,8 @@ export function ComponentShowcase({
               variant={viewport === 'mobile' ? 'secondary' : 'ghost'}
               size="sm"
               onClick={() => setViewport('mobile')}
+              aria-label="Switch to mobile viewport"
+              aria-pressed={viewport === 'mobile'}
             >
               <Smartphone className="h-4 w-4" />
             </Button>
@@ -153,6 +156,8 @@ export function ComponentShowcase({
               variant={viewport === 'tablet' ? 'secondary' : 'ghost'}
               size="sm"
               onClick={() => setViewport('tablet')}
+              aria-label="Switch to tablet viewport"
+              aria-pressed={viewport === 'tablet'}
             >
               <Tablet className="h-4 w-4" />
             </Button>
@@ -160,6 +165,8 @@ export function ComponentShowcase({
               variant={viewport === 'desktop' ? 'secondary' : 'ghost'}
               size="sm"
               onClick={() => setViewport('desktop')}
+              aria-label="Switch to desktop viewport"
+              aria-pressed={viewport === 'desktop'}
             >
               <Monitor className="h-4 w-4" />
             </Button>
@@ -168,6 +175,8 @@ export function ComponentShowcase({
               variant={theme === 'dark' ? 'secondary' : 'ghost'}
               size="sm"
               onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+              aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
+              aria-pressed={theme === 'dark'}
             >
               {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
             </Button>
@@ -175,6 +184,8 @@ export function ComponentShowcase({
               variant={showGrid ? 'secondary' : 'ghost'}
               size="sm"
               onClick={() => setShowGrid(!showGrid)}
+              aria-label="Toggle grid overlay"
+              aria-pressed={showGrid}
             >
               <Zap className="h-4 w-4" />
             </Button>
@@ -191,7 +202,9 @@ export function ComponentShowcase({
           )}
         >
           <div className="flex items-center justify-center min-h-[200px]">
-            {component}
+            <StyleErrorBoundary>
+              {component}
+            </StyleErrorBoundary>
           </div>
         </div>
 
@@ -274,6 +287,7 @@ export function ComponentShowcase({
                 variant="secondary"
                 className="absolute top-2 right-2"
                 onClick={() => copyToClipboard(code.react, 'react')}
+                aria-label={copied === 'react' ? 'Copied!' : 'Copy React code'}
               >
                 {copied === 'react' ? (
                   <Check className="h-4 w-4" />
@@ -297,6 +311,7 @@ export function ComponentShowcase({
                   variant="secondary"
                   className="absolute top-2 right-2"
                   onClick={() => copyToClipboard(code.html!, 'html')}
+                  aria-label={copied === 'html' ? 'Copied!' : 'Copy HTML code'}
                 >
                   {copied === 'html' ? (
                     <Check className="h-4 w-4" />

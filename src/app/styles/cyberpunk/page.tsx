@@ -2,14 +2,13 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { Terminal, Zap, Database, Shield, AlertTriangle, Wifi, Cpu } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
-import { ChevronLeft, Cpu, Wifi, Shield, Terminal, Zap, Database, AlertTriangle } from 'lucide-react'
-import Link from 'next/link'
 
 export default function CyberpunkPage() {
   const [glitchText, setGlitchText] = useState('CYBERPUNK_2077')
@@ -17,6 +16,8 @@ export default function CyberpunkPage() {
   const [terminalText, setTerminalText] = useState('')
 
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null
+
     // Glitch effect
     const glitchInterval = setInterval(() => {
       const originalText = 'CYBERPUNK_2077'
@@ -33,7 +34,9 @@ export default function CyberpunkPage() {
       }
       setGlitchText(glitched)
       
-      setTimeout(() => setGlitchText(originalText), 100)
+      // Clear any existing timeout before creating a new one
+      if (timeoutId) clearTimeout(timeoutId)
+      timeoutId = setTimeout(() => setGlitchText(originalText), 100)
     }, 3000)
 
     // Scan progress
@@ -57,13 +60,14 @@ export default function CyberpunkPage() {
       clearInterval(glitchInterval)
       clearInterval(scanInterval)
       clearInterval(typeInterval)
+      if (timeoutId) clearTimeout(timeoutId)
     }
   }, [])
 
   return (
-    <div className="min-h-screen bg-black text-cyan-400 relative overflow-hidden">
+    <div className="relative -m-6 p-6 min-h-[calc(100vh-4rem)] bg-black text-cyan-400 overflow-hidden">
       {/* Grid Background */}
-      <div className="fixed inset-0 opacity-20">
+      <div className="fixed inset-0 opacity-20 -z-10 pointer-events-none">
         <div className="absolute inset-0" style={{
           backgroundImage: `
             linear-gradient(cyan 1px, transparent 1px),
@@ -74,7 +78,7 @@ export default function CyberpunkPage() {
       </div>
 
       {/* Scan Line */}
-      <div className="fixed inset-0 pointer-events-none">
+      <div className="fixed inset-0 -z-10 pointer-events-none">
         <div
           className="h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-50"
           style={{ 
@@ -84,20 +88,14 @@ export default function CyberpunkPage() {
         ></div>
       </div>
 
-      {/* Header */}
-      <header className="relative z-10 p-6 border-b-2 border-cyan-400/50 bg-black/80 backdrop-blur-sm">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link href="/styles" className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors group">
-            <ChevronLeft className="w-5 h-5 group-hover:animate-pulse" />
-            <span className="font-mono">[BACK]</span>
-          </Link>
-          <h1 className="text-4xl font-mono font-bold relative">
-            <span className="relative z-10">{glitchText}</span>
-            <span className="absolute inset-0 text-pink-500 animate-glitch-1">{glitchText}</span>
-            <span className="absolute inset-0 text-cyan-300 animate-glitch-2">{glitchText}</span>
-          </h1>
-        </div>
-      </header>
+      {/* Page Title */}
+      <div className="relative z-10 mb-8">
+        <h1 className="text-4xl font-mono font-bold relative">
+          <span className="relative z-10">{glitchText}</span>
+          <span className="absolute inset-0 text-pink-500 animate-glitch-1">{glitchText}</span>
+          <span className="absolute inset-0 text-cyan-300 animate-glitch-2">{glitchText}</span>
+        </h1>
+      </div>
 
       <main className="relative z-10 max-w-6xl mx-auto p-6 space-y-12">
         {/* Design Principles */}

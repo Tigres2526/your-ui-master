@@ -292,9 +292,9 @@ export const neumorphismStyle: DesignStyle = {
         }
       },
       sizes: {
-        sm: { height: "1.5rem", width: "2.75rem" },
-        md: { height: "2rem", width: "3.5rem" },
-        lg: { height: "2.5rem", width: "4.5rem" }
+        sm: { height: "1.5rem" },
+        md: { height: "2rem" },
+        lg: { height: "2.5rem" }
       },
       states: {}
     },
