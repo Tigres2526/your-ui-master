@@ -1,370 +1,416 @@
 'use client'
 
-import React, { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Zap, Star, Sparkles } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Badge } from '@/components/ui/badge'
+import React from 'react'
+import { MemphisShowcase } from '@/components/memphis/memphis-showcase'
+// import { MemphisLoginForm } from '@/components/patterns/memphis/login-form'
+// import { MemphisDashboardStats } from '@/components/patterns/memphis/dashboard-stats'
+import { DesignTokenGenerator } from '@/components/design-token-generator'
+// import { InteractivePlayground } from '@/components/interactive-playground'
+import { PatternLibrary } from '@/components/pattern-library'
+import { ImplementationGuide } from '@/components/implementation-guide'
+import { ExportManager } from '@/components/export-manager'
+import { ProjectStarter } from '@/components/project-starter'
+import { AIPromptGenerator } from '@/components/ai-prompt-generator'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { CodeBlockWithExport } from '@/components/code-block-with-export'
+// import memphisPrompts from '@/ai-prompts/memphis-prompts'
+
+// const memphisComponents = {
+//   button: {
+//     name: 'MemphisButton',
+//     description: 'Bold button with hard shadows and uppercase text',
+//     props: {
+//       variant: ['default', 'primary', 'secondary', 'accent', 'ghost', 'outline'],
+//       size: ['sm', 'default', 'lg', 'icon'],
+//       children: 'React.ReactNode',
+//     },
+//   },
+//   card: {
+//     name: 'MemphisCard',
+//     description: 'Geometric card with thick borders and playful design',
+//     props: {
+//       variant: ['default', 'primary', 'secondary', 'accent', 'pattern', 'floating'],
+//       size: ['sm', 'default', 'lg'],
+//       children: 'React.ReactNode',
+//     },
+//   },
+//   input: {
+//     name: 'MemphisInput',
+//     description: 'Bold input field with Memphis styling',
+//     props: {
+//       variant: ['default', 'filled', 'underline'],
+//       size: ['sm', 'default', 'lg'],
+//       placeholder: 'string',
+//     },
+//   },
+//   badge: {
+//     name: 'MemphisBadge',
+//     description: 'Retro badge with bold borders',
+//     props: {
+//       variant: ['default', 'primary', 'secondary', 'accent', 'outline'],
+//       size: ['sm', 'default', 'lg'],
+//       children: 'React.ReactNode',
+//     },
+//   },
+// }
+
+const codeExamples = {
+  css: `/* Memphis CSS */
+.memphis-button {
+  background-color: #FF1744;
+  color: white;
+  border: 4px solid #000;
+  box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 1);
+  font-weight: 900;
+  text-transform: uppercase;
+  transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.memphis-button:hover {
+  box-shadow: 6px 6px 0 0 rgba(0, 0, 0, 1);
+  transform: rotate(2deg);
+}
+
+.memphis-button:active {
+  box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 1);
+  transform: translate(2px, 2px);
+}
+
+.memphis-card {
+  background-color: white;
+  border: 4px solid #000;
+  box-shadow: 6px 6px 0 0 rgba(0, 0, 0, 1);
+  position: relative;
+}
+
+.memphis-pattern {
+  background-image: radial-gradient(circle, #000 1px, transparent 1px);
+  background-size: 20px 20px;
+}`,
+  tailwind: `<!-- Memphis with Tailwind -->
+<button class="
+  bg-[#FF1744] text-white 
+  font-black uppercase tracking-wider
+  px-6 py-3 
+  border-4 border-black 
+  shadow-[4px_4px_0_0_rgba(0,0,0,1)]
+  hover:shadow-[6px_6px_0_0_rgba(0,0,0,1)]
+  active:shadow-[2px_2px_0_0_rgba(0,0,0,1)]
+  active:translate-x-[2px] active:translate-y-[2px]
+  transform hover:rotate-2 active:rotate-0
+  transition-all duration-[250ms]
+">
+  CLICK ME!
+</button>
+
+<div class="
+  bg-white p-6
+  border-4 border-black
+  shadow-[6px_6px_0_0_rgba(0,0,0,1)]
+  relative
+">
+  <div class="absolute -top-4 -right-4 w-12 h-12 bg-[#FFEB3B] rounded-full border-4 border-black"></div>
+  <h3 class="text-2xl font-black uppercase">Memphis Card</h3>
+  <p class="font-bold mt-2">Bold, playful, and utterly radical!</p>
+</div>
+
+<input class="
+  w-full bg-white text-black
+  font-bold placeholder-gray-500
+  px-4 py-3
+  border-4 border-black
+  shadow-[4px_4px_0_0_rgba(0,0,0,1)]
+  focus:shadow-[2px_2px_0_0_rgba(0,0,0,1)]
+  focus:translate-x-[2px] focus:translate-y-[2px]
+  outline-none transition-all duration-[250ms]
+" placeholder="TYPE SOMETHING...">`,
+  typescript: `// Memphis Components
+import { MemphisButton } from '@/components/memphis'
+import { MemphisCard, MemphisCardHeader, MemphisCardTitle, MemphisCardContent } from '@/components/memphis'
+import { MemphisInput } from '@/components/memphis'
+import { MemphisBadge } from '@/components/memphis'
+
+export function MemphisExample() {
+  return (
+    <div className="space-y-6">
+      <MemphisButton variant="primary" size="lg">
+        TOTALLY RAD!
+      </MemphisButton>
+      
+      <MemphisCard variant="pattern">
+        <MemphisCardHeader>
+          <MemphisCardTitle>MEMPHIS STYLE</MemphisCardTitle>
+        </MemphisCardHeader>
+        <MemphisCardContent>
+          <p>Bold patterns and playful geometry!</p>
+          <MemphisBadge variant="accent">NEW!</MemphisBadge>
+        </MemphisCardContent>
+      </MemphisCard>
+      
+      <MemphisInput 
+        variant="filled" 
+        placeholder="ENTER TEXT..." 
+      />
+    </div>
+  )
+}`,
+  scss: `// Memphis SCSS
+@mixin memphis-shadow($size: 'default') {
+  @if $size == 'sm' {
+    box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 1);
+  } @else if $size == 'lg' {
+    box-shadow: 8px 8px 0 0 rgba(0, 0, 0, 1);
+  } @else {
+    box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 1);
+  }
+}
+
+@mixin memphis-border {
+  border: 4px solid #000;
+}
+
+.memphis-button {
+  @include memphis-border();
+  @include memphis-shadow();
+  
+  background-color: #FF1744;
+  color: white;
+  font-weight: 900;
+  text-transform: uppercase;
+  transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  &:hover {
+    @include memphis-shadow('lg');
+    transform: rotate(2deg);
+  }
+  
+  &:active {
+    @include memphis-shadow('sm');
+    transform: translate(2px, 2px);
+  }
+}
+
+.memphis-pattern {
+  &--dots {
+    background-image: radial-gradient(circle, #000 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  
+  &--stripes {
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      #000 10px,
+      #000 20px
+    );
+  }
+  
+  &--zigzag {
+    background-image: linear-gradient(135deg, #000 25%, transparent 25%),
+                      linear-gradient(225deg, #000 25%, transparent 25%),
+                      linear-gradient(315deg, #000 25%, transparent 25%),
+                      linear-gradient(45deg, #000 25%, transparent 25%);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 0, 10px 10px, 0 10px;
+  }
+}`
+}
+
+// const implementationSteps = [
+//   {
+//     title: 'Install Dependencies',
+//     description: 'Set up the required packages',
+//     code: `npm install class-variance-authority clsx tailwind-merge
+// npm install @radix-ui/react-select @radix-ui/react-switch
+// npm install @radix-ui/react-checkbox @radix-ui/react-radio-group`,
+//   },
+//   {
+//     title: 'Configure Memphis Shadows',
+//     description: 'Add hard shadows to Tailwind config',
+//     code: `// tailwind.config.ts
+// theme: {
+//   extend: {
+//     boxShadow: {
+//       'memphis-sm': '2px 2px 0 0 rgba(0, 0, 0, 1)',
+//       'memphis': '4px 4px 0 0 rgba(0, 0, 0, 1)',
+//       'memphis-md': '6px 6px 0 0 rgba(0, 0, 0, 1)',
+//       'memphis-lg': '8px 8px 0 0 rgba(0, 0, 0, 1)',
+//       'memphis-xl': '12px 12px 0 0 rgba(0, 0, 0, 1)',
+//     },
+//     borderWidth: {
+//       '3': '3px',
+//       '4': '4px',
+//     },
+//   },
+// }`,
+//   },
+//   {
+//     title: 'Create Memphis Components',
+//     description: 'Build your Memphis-style components',
+//     code: `// components/memphis-button.tsx
+// import { cva } from 'class-variance-authority'
+// 
+// const memphisButton = cva(
+//   'font-bold uppercase tracking-wider transition-all duration-250 transform hover:rotate-2 active:rotate-0',
+//   {
+//     variants: {
+//       variant: {
+//         default: 'bg-white text-black border-4 border-black shadow-memphis hover:shadow-memphis-md',
+//         primary: 'bg-[#FF1744] text-white border-4 border-black shadow-memphis hover:shadow-memphis-md',
+//       },
+//       size: {
+//         sm: 'h-8 px-3 text-sm',
+//         default: 'h-12 px-6 text-base',
+//         lg: 'h-16 px-8 text-xl',
+//       },
+//     },
+//   }
+// )`,
+//   },
+// ]
+
+// const memphisPatterns = [
+//   {
+//     id: 'login-form',
+//     name: 'Login Form',
+//     description: 'Retro authentication with geometric decorations',
+//     component: MemphisLoginForm,
+//   },
+//   {
+//     id: 'dashboard-stats',
+//     name: 'Dashboard Stats',
+//     description: 'Statistics with playful Memphis elements',
+//     component: MemphisDashboardStats,
+//   },
+// ]
+
+// const projectResources = {
+//   starter: {
+//     name: 'create-memphis-app',
+//     description: 'Memphis design system starter',
+//     command: 'npx create-memphis-app my-app',
+//     features: ['Pre-built components', 'Pattern library', 'Animation presets'],
+//   },
+//   templates: [
+//     {
+//       name: 'Memphis Portfolio',
+//       description: 'Creative portfolio with 80s vibes',
+//       href: '#',
+//     },
+//     {
+//       name: 'Memphis Shop',
+//       description: 'E-commerce with retro aesthetics',
+//       href: '#',
+//     },
+//   ],
+//   resources: [
+//     {
+//       name: 'Memphis Design History',
+//       description: 'Learn about the Memphis Group',
+//       href: '#',
+//     },
+//     {
+//       name: 'Pattern Generator',
+//       description: 'Create Memphis patterns',
+//       href: '#',
+//     },
+//   ],
+// }
 
 export default function MemphisPage() {
-  const [activePattern, setActivePattern] = useState('squiggles')
-
-  // Fixed positions for dots to avoid hydration errors
-  const dotPositions = [
-    { left: '10%', top: '15%' },
-    { left: '25%', top: '30%' },
-    { left: '40%', top: '20%' },
-    { left: '55%', top: '40%' },
-    { left: '70%', top: '25%' },
-    { left: '85%', top: '50%' },
-    { left: '15%', top: '60%' },
-    { left: '30%', top: '70%' },
-    { left: '45%', top: '55%' },
-    { left: '60%', top: '65%' },
-    { left: '75%', top: '75%' },
-    { left: '90%', top: '80%' },
-    { left: '20%', top: '85%' },
-    { left: '35%', top: '90%' },
-    { left: '50%', top: '80%' },
-    { left: '65%', top: '85%' },
-    { left: '80%', top: '90%' },
-    { left: '12%', top: '45%' },
-    { left: '92%', top: '35%' },
-    { left: '5%', top: '75%' },
-  ]
-
   return (
-    <div className="relative -m-6 p-6 min-h-[calc(100vh-4rem)] bg-pink-100 overflow-hidden">
-      {/* Background Pattern */}
-      <div className="fixed inset-0 opacity-20 -z-10 pointer-events-none">
-        {/* Squiggles */}
-        <svg className="absolute top-10 left-10" width="100" height="100" viewBox="0 0 100 100">
-          <path d="M10,50 Q30,10 50,50 T90,50" stroke="#00CED1" strokeWidth="4" fill="none" />
-        </svg>
-        <svg className="absolute top-40 right-20" width="120" height="120" viewBox="0 0 120 120">
-          <path d="M20,60 Q40,20 60,60 T100,60" stroke="#FF1493" strokeWidth="5" fill="none" />
-        </svg>
-        
-        {/* Geometric Shapes */}
-        <div className="absolute top-20 right-1/3 w-16 h-16 bg-yellow-400 rotate-45"></div>
-        <div className="absolute bottom-20 left-1/4 w-20 h-20 bg-cyan-400 rounded-full"></div>
-        <div className="absolute top-1/3 left-10 w-0 h-0 border-l-[30px] border-l-transparent border-r-[30px] border-r-transparent border-b-[50px] border-b-purple-500"></div>
-        
-        {/* Dots Pattern */}
-        {dotPositions.map((pos, i) => (
-          <div
-            key={i}
-            className="absolute w-2 h-2 bg-black rounded-full"
-            style={{
-              left: pos.left,
-              top: pos.top,
-            }}
-          />
-        ))}
-        
-        {/* Zigzag */}
-        <div className="absolute bottom-10 right-10 text-6xl text-green-500 font-black">
-          ～～～
+    <div className="min-h-screen bg-[#FFF9C4]">
+      {/* Background decorations */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden opacity-20">
+        <div className="absolute top-20 left-10 w-20 h-20 bg-[#FF1744] rotate-45" />
+        <div className="absolute top-40 right-20 w-16 h-16 border-4 border-black rounded-full" />
+        <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-[#FFEB3B]" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }} />
+        <div className="absolute bottom-40 right-1/3 w-32 h-32 bg-[#00BCD4]" style={{ clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' }} />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+        {/* Header */}
+        <div className="text-center space-y-4">
+          <h1 className="text-6xl font-black uppercase transform -rotate-2">
+            Memphis Design System
+          </h1>
+          <p className="text-xl font-bold max-w-3xl mx-auto">
+            Bold geometric patterns, vibrant colors, and playful 80s aesthetics. 
+            Embrace the chaos of squiggles, zigzags, and radical shapes!
+          </p>
         </div>
+
+        {/* Tabs */}
+        <Tabs defaultValue="showcase" className="space-y-8">
+          <TabsList className="inline-flex gap-2 h-auto p-2 bg-white border-4 border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)]">
+            <TabsTrigger value="showcase" className="data-[state=active]:bg-[#FF1744] data-[state=active]:text-white data-[state=active]:shadow-[2px_2px_0_0_rgba(0,0,0,1)] font-bold uppercase">
+              Showcase
+            </TabsTrigger>
+            <TabsTrigger value="tokens" className="data-[state=active]:bg-[#00BCD4] data-[state=active]:text-black data-[state=active]:shadow-[2px_2px_0_0_rgba(0,0,0,1)] font-bold uppercase">
+              Tokens
+            </TabsTrigger>
+            <TabsTrigger value="playground" className="data-[state=active]:bg-[#FFEB3B] data-[state=active]:text-black data-[state=active]:shadow-[2px_2px_0_0_rgba(0,0,0,1)] font-bold uppercase">
+              Playground
+            </TabsTrigger>
+            <TabsTrigger value="patterns" className="data-[state=active]:bg-[#76FF03] data-[state=active]:text-black data-[state=active]:shadow-[2px_2px_0_0_rgba(0,0,0,1)] font-bold uppercase">
+              Patterns
+            </TabsTrigger>
+            <TabsTrigger value="implementation" className="data-[state=active]:bg-[#9C27B0] data-[state=active]:text-white data-[state=active]:shadow-[2px_2px_0_0_rgba(0,0,0,1)] font-bold uppercase">
+              Guide
+            </TabsTrigger>
+            <TabsTrigger value="export" className="data-[state=active]:bg-[#FF6D00] data-[state=active]:text-white data-[state=active]:shadow-[2px_2px_0_0_rgba(0,0,0,1)] font-bold uppercase">
+              Export
+            </TabsTrigger>
+            <TabsTrigger value="ai" className="data-[state=active]:bg-[#00E676] data-[state=active]:text-black data-[state=active]:shadow-[2px_2px_0_0_rgba(0,0,0,1)] font-bold uppercase">
+              AI
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="showcase" className="space-y-8">
+            <MemphisShowcase />
+            
+            {/* Code Examples */}
+            <div className="space-y-4">
+              <h2 className="text-2xl font-black uppercase">Code Examples</h2>
+              <CodeBlockWithExport code={codeExamples} defaultFormat="tailwind" />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="tokens">
+            <DesignTokenGenerator style="memphis" />
+          </TabsContent>
+
+          <TabsContent value="playground">
+            {/* <InteractivePlayground
+              components={memphisComponents}
+              designSystem="memphis"
+            /> */}
+            <div className="text-center py-12">
+              <p className="text-xl font-bold uppercase">Coming soon</p>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="patterns">
+            <PatternLibrary style="memphis" />
+          </TabsContent>
+
+          <TabsContent value="implementation">
+            <ImplementationGuide style="memphis" />
+          </TabsContent>
+
+          <TabsContent value="export">
+            <div className="space-y-8">
+              <ExportManager style="memphis" />
+              <ProjectStarter style="memphis" />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="ai">
+            <AIPromptGenerator style="memphis" />
+          </TabsContent>
+        </Tabs>
       </div>
-
-      {/* Page Title */}
-      <div className="relative z-10 mb-8">
-        <h1 className="text-4xl font-black text-black transform -rotate-2">MEMPHIS DESIGN</h1>
-      </div>
-
-      <main className="relative z-10 max-w-6xl mx-auto p-6 space-y-12">
-        {/* Design Principles */}
-        <section className="space-y-6">
-          <h2 className="text-3xl font-black text-black transform rotate-1">DESIGN PRINCIPLES</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <motion.div
-              whileHover={{ rotate: -5, scale: 1.05 }}
-              className="relative"
-            >
-              <Card className="p-6 bg-cyan-300 border-4 border-black transform rotate-2">
-                <div className="absolute -top-4 -right-4 w-12 h-12 bg-yellow-400 rounded-full border-2 border-black"></div>
-                <Zap className="w-12 h-12 text-black mb-4" />
-                <h3 className="font-black text-xl mb-2">BOLD PATTERNS</h3>
-                <p className="text-black">Squiggles, zigzags, and geometric chaos create visual energy</p>
-              </Card>
-            </motion.div>
-            <motion.div
-              whileHover={{ rotate: 5, scale: 1.05 }}
-              className="relative"
-            >
-              <Card className="p-6 bg-purple-300 border-4 border-black transform -rotate-2">
-                <div className="absolute -top-4 -left-4 w-16 h-16 bg-pink-400 transform rotate-45 border-2 border-black"></div>
-                <Star className="w-12 h-12 text-black mb-4" />
-                <h3 className="font-black text-xl mb-2">PLAYFUL COLORS</h3>
-                <p className="text-black">Vibrant pastels clash with neons in unexpected harmony</p>
-              </Card>
-            </motion.div>
-            <motion.div
-              whileHover={{ rotate: -5, scale: 1.05 }}
-              className="relative"
-            >
-              <Card className="p-6 bg-green-300 border-4 border-black transform rotate-1">
-                <div className="absolute -bottom-4 -right-4 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[30px] border-b-red-500"></div>
-                <Sparkles className="w-12 h-12 text-black mb-4" />
-                <h3 className="font-black text-xl mb-2">80s NOSTALGIA</h3>
-                <p className="text-black">Retro-futuristic vibes with a rebellious twist</p>
-              </Card>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Color Palette */}
-        <section className="space-y-6">
-          <h2 className="text-3xl font-black text-black transform -rotate-1">COLOR EXPLOSION</h2>
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
-            {[
-              { color: 'bg-pink-400', name: 'HOT PINK' },
-              { color: 'bg-cyan-400', name: 'ELECTRIC BLUE' },
-              { color: 'bg-yellow-300', name: 'SUNSHINE' },
-              { color: 'bg-purple-400', name: 'PURPLE HAZE' },
-              { color: 'bg-green-400', name: 'NEON GREEN' },
-              { color: 'bg-red-500', name: 'CHERRY RED' }
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                whileHover={{ scale: 1.1, rotate: 10 }}
-                className="relative"
-              >
-                <div className={`h-24 ${item.color} border-3 border-black transform ${index % 2 ? 'rotate-2' : '-rotate-2'}`}></div>
-                <p className="font-black text-xs mt-2 text-center">{item.name}</p>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
-        {/* Interactive Components */}
-        <section className="space-y-8">
-          <h2 className="text-3xl font-black text-black transform rotate-2">RADICAL COMPONENTS</h2>
-          
-          {/* Pattern Showcase */}
-          <div className="space-y-4">
-            <h3 className="text-2xl font-black transform -rotate-1">PATTERN PARTY</h3>
-            <div className="bg-white p-8 border-4 border-black relative overflow-hidden">
-              {/* Dynamic Pattern Background */}
-              {activePattern === 'squiggles' && (
-                <div className="absolute inset-0">
-                  <svg className="w-full h-full" viewBox="0 0 400 300">
-                    <path d="M50,150 Q100,50 150,150 T250,150 Q300,250 350,150" stroke="#FF1493" strokeWidth="8" fill="none" />
-                    <path d="M50,100 Q150,200 250,100 T350,100" stroke="#00CED1" strokeWidth="6" fill="none" />
-                  </svg>
-                </div>
-              )}
-              {activePattern === 'geometric' && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-32 h-32 bg-yellow-400 rotate-45 absolute top-10 left-10"></div>
-                  <div className="w-24 h-24 bg-cyan-400 rounded-full absolute bottom-10 right-10"></div>
-                  <div className="w-0 h-0 border-l-[40px] border-l-transparent border-r-[40px] border-r-transparent border-b-[60px] border-b-purple-500 absolute top-20 right-20"></div>
-                </div>
-              )}
-              {activePattern === 'dots' && (
-                <div className="absolute inset-0">
-                  {[...Array(50)].map((_, i) => (
-                    <div
-                      key={i}
-                      className={`absolute w-4 h-4 rounded-full ${
-                        i % 3 === 0 ? 'bg-pink-400' : i % 3 === 1 ? 'bg-cyan-400' : 'bg-yellow-400'
-                      }`}
-                      style={{
-                        left: `${(i % 10) * 10}%`,
-                        top: `${Math.floor(i / 10) * 20}%`,
-                      }}
-                    />
-                  ))}
-                </div>
-              )}
-              
-              <div className="relative z-10 flex gap-4 justify-center">
-                <Button
-                  onClick={() => setActivePattern('squiggles')}
-                  className={`${
-                    activePattern === 'squiggles' ? 'bg-pink-400' : 'bg-white'
-                  } text-black border-3 border-black hover:bg-pink-300 font-black`}
-                >
-                  SQUIGGLES
-                </Button>
-                <Button
-                  onClick={() => setActivePattern('geometric')}
-                  className={`${
-                    activePattern === 'geometric' ? 'bg-cyan-400' : 'bg-white'
-                  } text-black border-3 border-black hover:bg-cyan-300 font-black`}
-                >
-                  GEOMETRIC
-                </Button>
-                <Button
-                  onClick={() => setActivePattern('dots')}
-                  className={`${
-                    activePattern === 'dots' ? 'bg-yellow-400' : 'bg-white'
-                  } text-black border-3 border-black hover:bg-yellow-300 font-black`}
-                >
-                  DOTS
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          {/* Buttons */}
-          <div className="space-y-4">
-            <h3 className="text-2xl font-black transform rotate-1">RADICAL BUTTONS</h3>
-            <div className="flex flex-wrap gap-4">
-              <motion.div whileHover={{ scale: 1.1, rotate: -5 }}>
-                <Button className="bg-pink-400 text-black border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 font-black text-lg px-6 py-4 transform rotate-2">
-                  TOTALLY RAD!
-                </Button>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.1, rotate: 5 }}>
-                <Button className="bg-cyan-400 text-black border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 font-black text-lg px-6 py-4 transform -rotate-2">
-                  WICKED COOL
-                </Button>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.1, rotate: -5 }}>
-                <Button className="bg-yellow-300 text-black border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 font-black text-lg px-6 py-4 transform rotate-1">
-                  GROOVY BABY
-                </Button>
-              </motion.div>
-            </div>
-          </div>
-
-          {/* Cards */}
-          <div className="space-y-4">
-            <h3 className="text-2xl font-black transform -rotate-2">FUNKY CARDS</h3>
-            <div className="grid md:grid-cols-3 gap-6">
-              <motion.div whileHover={{ scale: 1.05, rotate: 5 }}>
-                <Card className="bg-purple-300 border-4 border-black p-6 relative transform -rotate-2">
-                  <div className="absolute -top-6 -right-6 w-12 h-12 bg-yellow-400 rounded-full border-2 border-black"></div>
-                  <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-pink-400 rotate-45 border-2 border-black"></div>
-                  <h4 className="font-black text-xl mb-2">ELECTRIC DREAMS</h4>
-                  <p className="text-black">Where neon meets pastel in a dance of visual chaos</p>
-                </Card>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05, rotate: -5 }}>
-                <Card className="bg-green-300 border-4 border-black p-6 relative transform rotate-2">
-                  <div className="absolute -top-4 -left-6 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[30px] border-b-red-500"></div>
-                  <div className="absolute -bottom-6 -right-4 w-14 h-14 bg-cyan-400 rounded-full border-2 border-black"></div>
-                  <h4 className="font-black text-xl mb-2">RETRO FUTURE</h4>
-                  <p className="text-black">Yesterday&apos;s tomorrow is today&apos;s aesthetic revolution</p>
-                </Card>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05, rotate: 5 }}>
-                <Card className="bg-yellow-300 border-4 border-black p-6 relative transform -rotate-1">
-                  <div className="absolute -top-5 -right-5 w-10 h-10 bg-purple-400 border-2 border-black"></div>
-                  <div className="absolute -bottom-3 -left-3 w-12 h-12 bg-pink-400 rounded-full border-2 border-black"></div>
-                  <h4 className="font-black text-xl mb-2">PATTERN POWER</h4>
-                  <p className="text-black">Embrace the chaos of squiggles and zigzags</p>
-                </Card>
-              </motion.div>
-            </div>
-          </div>
-
-          {/* Form */}
-          <div className="space-y-4">
-            <h3 className="text-2xl font-black transform rotate-1">TUBULAR FORM</h3>
-            <Card className="bg-white border-4 border-black p-8 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-pink-400 rounded-full -translate-y-16 translate-x-16"></div>
-              <div className="absolute bottom-0 left-0 w-24 h-24 bg-cyan-400 rotate-45 translate-y-12 -translate-x-12"></div>
-              
-              <form className="relative z-10 space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="font-black text-lg">YOUR NAME</Label>
-                  <Input
-                    id="name"
-                    placeholder="What&apos;s your name, dude?"
-                    className="border-3 border-black bg-yellow-100 focus:bg-yellow-200 focus:ring-0 focus:border-black font-bold"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="font-black text-lg">EMAIL ADDRESS</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="Drop your email here!"
-                    className="border-3 border-black bg-pink-100 focus:bg-pink-200 focus:ring-0 focus:border-black font-bold"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="message" className="font-black text-lg">MESSAGE</Label>
-                  <textarea
-                    id="message"
-                    placeholder="Tell us something rad!"
-                    rows={4}
-                    className="w-full border-3 border-black bg-cyan-100 focus:bg-cyan-200 p-3 focus:ring-0 focus:border-black focus:outline-none font-bold"
-                  />
-                </div>
-                <Button className="w-full bg-purple-400 text-black border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[6px] hover:translate-y-[6px] font-black text-xl py-6 transform -rotate-1">
-                  SEND IT! 🚀
-                </Button>
-              </form>
-            </Card>
-          </div>
-
-          {/* Badges */}
-          <div className="space-y-4">
-            <h3 className="text-2xl font-black transform -rotate-1">BODACIOUS BADGES</h3>
-            <div className="flex flex-wrap gap-4">
-              <Badge className="bg-pink-400 text-black border-2 border-black font-black px-4 py-2 text-base transform rotate-2">NEW!</Badge>
-              <Badge className="bg-cyan-400 text-black border-2 border-black font-black px-4 py-2 text-base transform -rotate-2">HOT!</Badge>
-              <Badge className="bg-yellow-300 text-black border-2 border-black font-black px-4 py-2 text-base transform rotate-1">WOW!</Badge>
-              <Badge className="bg-purple-400 text-black border-2 border-black font-black px-4 py-2 text-base transform -rotate-1">COOL!</Badge>
-              <Badge className="bg-green-400 text-black border-2 border-black font-black px-4 py-2 text-base transform rotate-3">RAD!</Badge>
-            </div>
-          </div>
-        </section>
-
-        {/* Code Example */}
-        <section className="space-y-4">
-          <h2 className="text-3xl font-black text-black transform rotate-1">CODE VIBES</h2>
-          <Card className="bg-white border-4 border-black p-8 relative overflow-hidden">
-            <div className="absolute -top-8 -right-8 w-24 h-24 bg-pink-400 rounded-full"></div>
-            <pre className="relative z-10 text-sm font-mono overflow-x-auto">
-              <code>{`// Memphis Button
-<Button 
-  className="
-    bg-pink-400 text-black 
-    border-3 border-black 
-    shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] 
-    hover:shadow-none 
-    hover:translate-x-1 
-    hover:translate-y-1 
-    font-black text-lg 
-    px-6 py-4 
-    transform rotate-2
-  "
->
-  TOTALLY RAD!
-</Button>
-
-// Memphis Card
-<Card className="
-  bg-purple-300 
-  border-4 border-black 
-  p-6 relative 
-  transform -rotate-2
-">
-  <div className="
-    absolute -top-6 -right-6 
-    w-12 h-12 
-    bg-yellow-400 rounded-full 
-    border-2 border-black
-  "></div>
-  <h4 className="font-black text-xl mb-2">
-    ELECTRIC DREAMS
-  </h4>
-  <p className="text-black">
-    Content here
-  </p>
-</Card>`}</code>
-            </pre>
-          </Card>
-        </section>
-      </main>
     </div>
   )
 }
