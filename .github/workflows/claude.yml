@@ -12,38 +12,38 @@ on:
     types: [submitted]
 
 jobs:
-  claude:
-    # fire only when Claude is mentioned
-    if: |
-      (github.event_name == 'issue_comment' &&
-       contains(github.event.comment.body, '@claude')) ||
-      (github.event_name == 'pull_request_review_comment' &&
-       contains(github.event.comment.body, '@claude')) ||
-      (github.event_name == 'pull_request_review' &&
-       contains(github.event.review.body, '@claude')) ||
-      (github.event_name == 'issues' &&
-       (contains(github.event.issue.body, '@claude') ||
-        contains(github.event.issue.title, '@claude')))
-
+  claude-response:
     runs-on: ubuntu-latest
 
+    # Claude needs these repo‑scoped rights to push commits & update comments
     permissions:
-      contents: write        # push commits
-      pull-requests: write   # open / update PRs
-      issues: write          # update comments
-      id-token: write        # (needed by the action)
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0      # allow git diff / log
+          fetch-depth: 0   # full history lets git‑diff etc. work
 
       - name: Run Claude Code
-        id: claude
-        uses: anthropics/claude-code-action@v0.0.7   # ← **pin to the patched release**
+        uses: anthropics/claude-code-action@beta
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          github_token:     ${{ secrets.GITHUB_TOKEN }}
-          # ↓ ONE clean, comma‑separated string — no line breaks, no comments
-          allowed_tools: "Bash(*),View,GlobTool,GrepTool,BatchTool"
+          github_token:     ${{ secrets.GITHUB_TOKEN }}   # <‑‑ important!
+          # Exact allow‑list of Bash commands Claude is permitted to run
+          allowed_tools: >
+            Bash(node --version),
+            Bash(ls *),
+            Bash(npm install),
+            Bash(npm ci),
+            Bash(npm run lint),
+            Bash(npm run build),
+            Bash(git *),
+            View,
+            GlobTool,
+            GrepTool,
+            BatchTool,
+            Write
