@@ -1,51 +1,30 @@
 import { DesignTokens } from '@/types/design-tokens'
 
 export const claymorphismTokens: DesignTokens = {
-  id: 'claymorphism',
   name: 'Claymorphism',
   description: '3D clay-like appearance with soft shadows and smooth surfaces',
   
   colors: {
-    primary: {
-      DEFAULT: '#FF6B6B',
-      foreground: '#FFFFFF',
-    },
-    secondary: {
-      DEFAULT: '#4ECDC4',
-      foreground: '#FFFFFF',
-    },
-    accent: {
-      DEFAULT: '#FFE66D',
-      foreground: '#1A1A1A',
-    },
-    background: {
-      DEFAULT: '#F7F3F0',
-      foreground: '#1A1A1A',
-    },
-    card: {
-      DEFAULT: '#FFFFFF',
-      foreground: '#1A1A1A',
-    },
-    destructive: {
-      DEFAULT: '#EE5A52',
-      foreground: '#FFFFFF',
-    },
-    muted: {
-      DEFAULT: '#E8DDD8',
-      foreground: '#666666',
-    },
-    popover: {
-      DEFAULT: '#FFFFFF',
-      foreground: '#1A1A1A',
+    primary: '#FF6B6B',
+    secondary: '#4ECDC4',
+    background: '#F7F3F0',
+    surface: '#FFFFFF',
+    text: {
+      primary: '#1A1A1A',
+      secondary: '#666666',
+      disabled: '#A0A0A0',
     },
     border: '#E0D5D0',
-    input: '#E0D5D0',
-    ring: '#FF6B6B',
+    error: '#EE5A52',
+    warning: '#FFE66D',
+    success: '#4ECDC4',
+    info: '#6B9FFF',
   },
   
   typography: {
     fontFamily: {
       sans: '"Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+      serif: 'Georgia, serif',
       mono: '"JetBrains Mono", "Fira Code", monospace',
     },
     fontSize: {
@@ -60,19 +39,17 @@ export const claymorphismTokens: DesignTokens = {
       '5xl': '3rem',
     },
     fontWeight: {
-      light: '300',
-      normal: '400',
-      medium: '500',
-      semibold: '600',
-      bold: '700',
+      light: 300,
+      normal: 400,
+      medium: 500,
+      semibold: 600,
+      bold: 700,
+      extrabold: 800,
     },
     lineHeight: {
-      none: '1',
       tight: '1.25',
-      snug: '1.375',
       normal: '1.5',
-      relaxed: '1.625',
-      loose: '2',
+      relaxed: '1.75',
     },
   },
   
@@ -84,28 +61,25 @@ export const claymorphismTokens: DesignTokens = {
     xl: '3rem',
     '2xl': '4rem',
     '3xl': '6rem',
-    '4xl': '8rem',
   },
   
   borderRadius: {
     none: '0',
     sm: '1rem',
-    DEFAULT: '1.5rem',
-    md: '2rem',
+    md: '1.5rem',
     lg: '2.5rem',
     xl: '3rem',
     '2xl': '4rem',
+    '3xl': '6rem',
     full: '9999px',
   },
   
   shadows: {
     xs: '0 10px 20px -5px rgba(0, 0, 0, 0.1), inset 0 -2px 4px rgba(255, 255, 255, 0.8)',
     sm: '0 15px 30px -10px rgba(0, 0, 0, 0.15), inset 0 -3px 6px rgba(255, 255, 255, 0.8)',
-    DEFAULT: '0 20px 40px -15px rgba(0, 0, 0, 0.2), inset 0 -4px 8px rgba(255, 255, 255, 0.8)',
     md: '0 25px 50px -20px rgba(0, 0, 0, 0.25), inset 0 -5px 10px rgba(255, 255, 255, 0.8)',
     lg: '0 30px 60px -25px rgba(0, 0, 0, 0.3), inset 0 -6px 12px rgba(255, 255, 255, 0.8)',
     xl: '0 35px 70px -30px rgba(0, 0, 0, 0.35), inset 0 -8px 16px rgba(255, 255, 255, 0.8)',
-    '2xl': '0 40px 80px -35px rgba(0, 0, 0, 0.4), inset 0 -10px 20px rgba(255, 255, 255, 0.8)',
     inner: 'inset 0 4px 8px rgba(0, 0, 0, 0.15), inset 0 -2px 4px rgba(255, 255, 255, 0.8)',
     none: 'none',
   },
@@ -113,15 +87,16 @@ export const claymorphismTokens: DesignTokens = {
   animation: {
     duration: {
       fast: '200ms',
-      DEFAULT: '300ms',
+      normal: '300ms',
       slow: '500ms',
     },
-    timing: {
-      DEFAULT: 'cubic-bezier(0.4, 0, 0.2, 1)',
+    easing: {
       linear: 'linear',
-      in: 'cubic-bezier(0.4, 0, 1, 1)',
-      out: 'cubic-bezier(0, 0, 0.2, 1)',
-      'in-out': 'cubic-bezier(0.4, 0, 0.2, 1)',
+      ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
+      easeOut: 'cubic-bezier(0, 0, 0.2, 1)',
+      easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      bounce: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
     },
   },
   

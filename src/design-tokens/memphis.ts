@@ -1,51 +1,30 @@
 import { DesignTokens } from '@/types/design-tokens'
 
 export const memphisTokens: DesignTokens = {
-  id: 'memphis',
   name: 'Memphis',
   description: 'Playful retro patterns with bold geometric shapes and vibrant colors',
   
   colors: {
-    primary: {
-      DEFAULT: '#FF1744',
-      foreground: '#FFFFFF',
-    },
-    secondary: {
-      DEFAULT: '#00BCD4',
-      foreground: '#000000',
-    },
-    accent: {
-      DEFAULT: '#FFEB3B',
-      foreground: '#000000',
-    },
-    background: {
-      DEFAULT: '#FFF9C4',
-      foreground: '#000000',
-    },
-    card: {
-      DEFAULT: '#FFFFFF',
-      foreground: '#000000',
-    },
-    destructive: {
-      DEFAULT: '#D32F2F',
-      foreground: '#FFFFFF',
-    },
-    muted: {
-      DEFAULT: '#E0E0E0',
-      foreground: '#616161',
-    },
-    popover: {
-      DEFAULT: '#FFFFFF',
-      foreground: '#000000',
+    primary: '#FF1744',
+    secondary: '#00BCD4',
+    background: '#FFF9C4',
+    surface: '#FFFFFF',
+    text: {
+      primary: '#000000',
+      secondary: '#616161',
+      disabled: '#A0A0A0',
     },
     border: '#000000',
-    input: '#000000',
-    ring: '#FF1744',
+    error: '#D32F2F',
+    warning: '#FFEB3B',
+    success: '#4CAF50',
+    info: '#2196F3',
   },
   
   typography: {
     fontFamily: {
       sans: '"Bebas Neue", "Arial Black", -apple-system, sans-serif',
+      serif: 'Georgia, serif',
       mono: '"Courier New", "Courier", monospace',
     },
     fontSize: {
@@ -60,20 +39,17 @@ export const memphisTokens: DesignTokens = {
       '5xl': '4.5rem',
     },
     fontWeight: {
-      light: '300',
-      normal: '400',
-      medium: '500',
-      semibold: '600',
-      bold: '700',
-      black: '900',
+      light: 300,
+      normal: 400,
+      medium: 500,
+      semibold: 600,
+      bold: 700,
+      extrabold: 900,
     },
     lineHeight: {
-      none: '1',
       tight: '1.1',
-      snug: '1.2',
       normal: '1.4',
       relaxed: '1.6',
-      loose: '1.8',
     },
   },
   
@@ -85,28 +61,25 @@ export const memphisTokens: DesignTokens = {
     xl: '2rem',
     '2xl': '3rem',
     '3xl': '4rem',
-    '4xl': '6rem',
   },
   
   borderRadius: {
     none: '0',
     sm: '0',
-    DEFAULT: '0',
     md: '0.5rem',
     lg: '1rem',
     xl: '2rem',
     '2xl': '3rem',
+    '3xl': '4rem',
     full: '9999px',
   },
   
   shadows: {
     xs: '2px 2px 0 0 rgba(0, 0, 0, 1)',
     sm: '4px 4px 0 0 rgba(0, 0, 0, 1)',
-    DEFAULT: '6px 6px 0 0 rgba(0, 0, 0, 1)',
     md: '8px 8px 0 0 rgba(0, 0, 0, 1)',
     lg: '10px 10px 0 0 rgba(0, 0, 0, 1)',
     xl: '12px 12px 0 0 rgba(0, 0, 0, 1)',
-    '2xl': '16px 16px 0 0 rgba(0, 0, 0, 1)',
     inner: 'inset 0 0 0 3px rgba(0, 0, 0, 1)',
     none: 'none',
   },
@@ -114,15 +87,16 @@ export const memphisTokens: DesignTokens = {
   animation: {
     duration: {
       fast: '150ms',
-      DEFAULT: '250ms',
+      normal: '250ms',
       slow: '400ms',
     },
-    timing: {
-      DEFAULT: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+    easing: {
       linear: 'linear',
-      in: 'cubic-bezier(0.4, 0, 1, 1)',
-      out: 'cubic-bezier(0, 0, 0.2, 1)',
-      'in-out': 'cubic-bezier(0.4, 0, 0.2, 1)',
+      ease: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+      easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
+      easeOut: 'cubic-bezier(0, 0, 0.2, 1)',
+      easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      bounce: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
     },
   },
   
