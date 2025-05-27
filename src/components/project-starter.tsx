@@ -165,11 +165,14 @@ export function ProjectStarter({ style, className }: ProjectStarterProps) {
               <Terminal className="h-6 w-6 text-primary" />
             </div>
             <div className="flex-1 space-y-4">
-              <div>
-                <h3 className="font-semibold text-lg">Quick Start</h3>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Create a new project with the {style} design system in seconds
-                </p>
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="font-semibold text-lg">Quick Start</h3>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Create a new project with the {style} design system in seconds
+                  </p>
+                </div>
+                <Badge>Coming Soon</Badge>
               </div>
               
               <div className="space-y-3">
@@ -204,7 +207,10 @@ export function ProjectStarter({ style, className }: ProjectStarterProps) {
 
         {/* Templates */}
         <div className="space-y-4">
-          <h3 className="font-semibold text-lg">Starter Templates</h3>
+          <div className="flex items-center justify-between">
+            <h3 className="font-semibold text-lg">Starter Templates</h3>
+            <Badge>Coming Soon</Badge>
+          </div>
           <div className="grid gap-4 md:grid-cols-2">
             {styleTemplates.map((template) => (
               <Card key={template.id} className="overflow-hidden">
@@ -278,11 +284,14 @@ export function ProjectStarter({ style, className }: ProjectStarterProps) {
               <Package className="h-6 w-6 text-primary" />
             </div>
             <div className="flex-1 space-y-4">
-              <div>
-                <h3 className="font-semibold text-lg">NPM Package</h3>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Install the {style} component library directly in your existing project
-                </p>
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="font-semibold text-lg">NPM Package</h3>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Install the {style} component library directly in your existing project
+                  </p>
+                </div>
+                <Badge>Coming Soon</Badge>
               </div>
               
               <div className="space-y-3">
@@ -310,10 +319,10 @@ export function ProjectStarter({ style, className }: ProjectStarterProps) {
                 <div className="flex items-center gap-4 pt-2">
                   <Badge variant="outline">
                     <Download className="h-3 w-3 mr-1" />
-                    2.3M weekly downloads
+                    Coming Soon
                   </Badge>
                   <Badge variant="outline">
-                    v2.1.4
+                    v0.0.0
                   </Badge>
                   <Badge variant="outline">
                     MIT License

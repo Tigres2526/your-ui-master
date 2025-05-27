@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import React, { useState } from "react"
 import { ComponentShowcase } from "@/components/showcase/component-showcase"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -36,6 +36,14 @@ export default function GlassmorphismPage() {
   const [blurIntensity, setBlurIntensity] = useState([16])
   const [opacity, setOpacity] = useState([25])
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  // Force dark mode for glassmorphism
+  React.useEffect(() => {
+    document.documentElement.classList.add('dark')
+    return () => {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [])
 
   // Safe handlers with validation
   const handleBlurChange = (value: number[]) => {

@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { CodeBlockWithExport } from '@/components/code-block-with-export'
 import { 
   NeuButton,
   NeuCard,
@@ -70,6 +71,167 @@ export function NeuShowcase() {
                   <NeuButton variant="primary">Primary</NeuButton>
                   <NeuButton variant="ghost">Ghost</NeuButton>
                   <NeuButton variant="pressed">Pressed</NeuButton>
+                </div>
+
+                <div className="mt-6">
+                  <div className="relative mb-4">
+                    <div className="absolute inset-0 flex items-center">
+                      <span className="w-full border-t" />
+                    </div>
+                    <div className="relative flex justify-center text-xs uppercase">
+                      <span className="bg-background px-2 text-muted-foreground">Code</span>
+                    </div>
+                  </div>
+                  <CodeBlockWithExport
+                    code={{
+                      typescript: `<NeuButton>Default</NeuButton>
+<NeuButton variant="primary">Primary</NeuButton>
+<NeuButton variant="ghost">Ghost</NeuButton>
+<NeuButton variant="pressed">Pressed</NeuButton>`,
+                      tailwind: `<!-- Default Neumorphic Button -->
+<button class="inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-100 text-gray-900 shadow-[6px_6px_12px_#bebebe,-6px_-6px_12px_#ffffff] hover:shadow-[8px_8px_16px_#bebebe,-8px_-8px_16px_#ffffff] active:shadow-[inset_2px_2px_4px_#bebebe,inset_-2px_-2px_4px_#ffffff] h-10 px-4 py-2">
+  Default
+</button>
+
+<!-- Primary Neumorphic Button -->
+<button class="inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow-[6px_6px_12px_rgba(0,0,0,0.15),-6px_-6px_12px_rgba(255,255,255,0.15)] hover:shadow-[8px_8px_16px_rgba(0,0,0,0.2),-8px_-8px_16px_rgba(255,255,255,0.2)] active:shadow-[inset_2px_2px_4px_rgba(0,0,0,0.2),inset_-2px_-2px_4px_rgba(255,255,255,0.2)] h-10 px-4 py-2">
+  Primary
+</button>
+
+<!-- Ghost Neumorphic Button -->
+<button class="inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-transparent text-gray-900 hover:shadow-[6px_6px_12px_#bebebe,-6px_-6px_12px_#ffffff] active:shadow-[inset_2px_2px_4px_#bebebe,inset_-2px_-2px_4px_#ffffff] h-10 px-4 py-2">
+  Ghost
+</button>
+
+<!-- Pressed Neumorphic Button -->
+<button class="inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-100 text-gray-900 shadow-[inset_2px_2px_4px_#bebebe,inset_-2px_-2px_4px_#ffffff] hover:shadow-[inset_3px_3px_6px_#bebebe,inset_-3px_-3px_6px_#ffffff] h-10 px-4 py-2">
+  Pressed
+</button>`,
+                      css: `.neu-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  height: 2.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #f3f4f6;
+  color: #111827;
+  box-shadow: 6px 6px 12px #bebebe, -6px -6px 12px #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+.neu-button:hover {
+  box-shadow: 8px 8px 16px #bebebe, -8px -8px 16px #ffffff;
+}
+
+.neu-button:active {
+  box-shadow: inset 2px 2px 4px #bebebe, inset -2px -2px 4px #ffffff;
+}
+
+.neu-button:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--ring-color);
+}
+
+.neu-button:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Primary variant */
+.neu-button--primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: 6px 6px 12px rgba(0,0,0,0.15), -6px -6px 12px rgba(255,255,255,0.15);
+}
+
+.neu-button--primary:hover {
+  box-shadow: 8px 8px 16px rgba(0,0,0,0.2), -8px -8px 16px rgba(255,255,255,0.2);
+}
+
+/* Ghost variant */
+.neu-button--ghost {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.neu-button--ghost:hover {
+  box-shadow: 6px 6px 12px #bebebe, -6px -6px 12px #ffffff;
+}
+
+/* Pressed variant */
+.neu-button--pressed {
+  box-shadow: inset 2px 2px 4px #bebebe, inset -2px -2px 4px #ffffff;
+}`,
+                      scss: `// Neumorphic button styles
+.neu-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  height: 2.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #f3f4f6;
+  color: #111827;
+  box-shadow: 6px 6px 12px #bebebe, -6px -6px 12px #ffffff;
+  border: none;
+  cursor: pointer;
+  
+  &:hover {
+    box-shadow: 8px 8px 16px #bebebe, -8px -8px 16px #ffffff;
+  }
+  
+  &:active {
+    box-shadow: inset 2px 2px 4px #bebebe, inset -2px -2px 4px #ffffff;
+  }
+  
+  &:focus-visible {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px var(--ring-color);
+  }
+  
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  
+  // Primary variant
+  &--primary {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+    box-shadow: 6px 6px 12px rgba(0,0,0,0.15), -6px -6px 12px rgba(255,255,255,0.15);
+    
+    &:hover {
+      box-shadow: 8px 8px 16px rgba(0,0,0,0.2), -8px -8px 16px rgba(255,255,255,0.2);
+    }
+  }
+  
+  // Ghost variant
+  &--ghost {
+    background-color: transparent;
+    box-shadow: none;
+    
+    &:hover {
+      box-shadow: 6px 6px 12px #bebebe, -6px -6px 12px #ffffff;
+    }
+  }
+  
+  // Pressed variant
+  &--pressed {
+    box-shadow: inset 2px 2px 4px #bebebe, inset -2px -2px 4px #ffffff;
+  }
+}`
+                    }}
+                  />
                 </div>
 
                 <h3 className="text-lg font-semibold">Button Sizes</h3>

@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { cn } from '@/lib/utils'
 import { 
   NeumorphismLoginForm,
   NeumorphismPricingCards,
@@ -143,106 +143,109 @@ export function MyComponent() {
           Production-ready UI patterns for real-world applications
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <Tabs value={selectedPattern.id} onValueChange={(value) => {
-          const pattern = patterns.find(p => p.id === value)
-          if (pattern) setSelectedPattern(pattern)
-        }}>
-          <div className="flex flex-col lg:flex-row gap-6">
-            {/* Pattern List */}
-            <div className="lg:w-64 space-y-2">
-              <h3 className="text-sm font-medium text-muted-foreground mb-3">Available Patterns</h3>
-              <TabsList className="flex-col h-auto p-1 bg-muted/50">
-                {patterns.map((pattern) => {
-                  const Icon = pattern.icon
-                  return (
-                    <TabsTrigger
-                      key={pattern.id}
-                      value={pattern.id}
-                      className="w-full justify-start gap-3 data-[state=active]:bg-background"
-                    >
-                      <Icon className="w-4 h-4" />
-                      <div className="text-left flex-1">
-                        <p className="font-medium">{pattern.name}</p>
-                        <p className="text-xs text-muted-foreground line-clamp-1">
-                          {pattern.description}
-                        </p>
-                      </div>
-                    </TabsTrigger>
-                  )
-                })}
-              </TabsList>
-            </div>
-
-            {/* Pattern Display */}
-            <div className="flex-1 space-y-6">
-              {neumorphismPatterns.map((pattern) => (
-                <TabsContent key={pattern.id} value={pattern.id} className="mt-0 space-y-6">
-                  {/* Pattern Info */}
-                  <div>
-                    <div className="flex items-start justify-between mb-2">
-                      <div>
-                        <h3 className="text-lg font-semibold">{pattern.name}</h3>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          {pattern.description}
-                        </p>
-                      </div>
-                      <Badge variant="secondary">Production Ready</Badge>
+      <CardContent className="p-0">
+        <div className="flex flex-col lg:flex-row min-h-[800px]">
+          {/* Pattern List - Sidebar */}
+          <div className="lg:w-80 border-b lg:border-b-0 lg:border-r bg-muted/5 p-6 flex-shrink-0">
+            <h3 className="text-sm font-medium text-muted-foreground mb-4">Available Patterns</h3>
+            <div className="space-y-2">
+              {patterns.map((pattern) => {
+                const Icon = pattern.icon
+                return (
+                  <button
+                    key={pattern.id}
+                    onClick={() => setSelectedPattern(pattern)}
+                    className={cn(
+                      "w-full flex items-start gap-3 p-3 rounded-lg text-left transition-colors",
+                      selectedPattern.id === pattern.id 
+                        ? "bg-primary/10 text-primary border border-primary/20" 
+                        : "hover:bg-muted/50"
+                    )}
+                  >
+                    <Icon className="w-5 h-5 mt-0.5 flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-sm">{pattern.name}</p>
+                      <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">
+                        {pattern.description}
+                      </p>
                     </div>
-                  </div>
-
-                  {/* Live Preview */}
-                  <div className="border rounded-lg p-6 bg-[#e0e0e0] min-h-[400px] flex items-center justify-center">
-                    {pattern.component}
-                  </div>
-
-                  {/* Code */}
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <h4 className="text-sm font-medium flex items-center gap-2">
-                        <Code className="w-4 h-4" />
-                        Implementation
-                      </h4>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => copyToClipboard(getFullCode(pattern), pattern.id)}
-                      >
-                        {copiedId === pattern.id ? (
-                          <>
-                            <Check className="w-4 h-4 mr-2" />
-                            Copied
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="w-4 h-4 mr-2" />
-                            Copy Code
-                          </>
-                        )}
-                      </Button>
-                    </div>
-                    <ScrollArea className="h-[200px] w-full rounded-md border bg-zinc-950 p-4">
-                      <pre className="text-sm text-zinc-50">
-                        <code>{getFullCode(pattern)}</code>
-                      </pre>
-                    </ScrollArea>
-                  </div>
-
-                  {/* Usage Tips */}
-                  <div className="rounded-lg border bg-muted/50 p-4">
-                    <h4 className="text-sm font-medium mb-2">Usage Tips</h4>
-                    <ul className="text-sm text-muted-foreground space-y-1">
-                      <li>• Fully responsive and mobile-friendly</li>
-                      <li>• All form inputs include proper validation</li>
-                      <li>• Follows accessibility best practices</li>
-                      <li>• Easily customizable with design tokens</li>
-                    </ul>
-                  </div>
-                </TabsContent>
-              ))}
+                  </button>
+                )
+              })}
             </div>
           </div>
-        </Tabs>
+
+          {/* Pattern Display - Main Content */}
+          <div className="flex-1 p-6 overflow-auto">
+            <div className="max-w-6xl mx-auto space-y-6">
+              {/* Pattern Info */}
+              <div>
+                <div className="flex items-start justify-between mb-2">
+                  <div>
+                    <h3 className="text-2xl font-bold">{selectedPattern.name}</h3>
+                    <p className="text-muted-foreground mt-1">
+                      {selectedPattern.description}
+                    </p>
+                  </div>
+                  <Badge variant="secondary" className="ml-4">Production Ready</Badge>
+                </div>
+              </div>
+
+              {/* Live Preview */}
+              <div className={cn(
+                "border rounded-xl p-8 lg:p-12 min-h-[600px] flex items-center justify-center overflow-hidden relative",
+                style === 'glassmorphism' ? "bg-gradient-to-br from-purple-600 via-pink-500 to-blue-500" : "bg-[#e0e0e0]"
+              )}>
+                <div className="w-full flex items-center justify-center">
+                  {selectedPattern.component}
+                </div>
+              </div>
+
+              {/* Code */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-sm font-medium flex items-center gap-2">
+                    <Code className="w-4 h-4" />
+                    Implementation
+                  </h4>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => copyToClipboard(getFullCode(selectedPattern), selectedPattern.id)}
+                  >
+                    {copiedId === selectedPattern.id ? (
+                      <>
+                        <Check className="w-4 h-4 mr-2" />
+                        Copied
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-4 h-4 mr-2" />
+                        Copy Code
+                      </>
+                    )}
+                  </Button>
+                </div>
+                <ScrollArea className="h-[300px] w-full rounded-md border bg-zinc-950 p-4">
+                  <pre className="text-sm text-zinc-50">
+                    <code>{getFullCode(selectedPattern)}</code>
+                  </pre>
+                </ScrollArea>
+              </div>
+
+              {/* Usage Tips */}
+              <div className="rounded-lg border bg-muted/50 p-4">
+                <h4 className="text-sm font-medium mb-2">Usage Tips</h4>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>• Fully responsive and mobile-friendly</li>
+                  <li>• All form inputs include proper validation</li>
+                  <li>• Follows accessibility best practices</li>
+                  <li>• Easily customizable with design tokens</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
       </CardContent>
     </Card>
   )

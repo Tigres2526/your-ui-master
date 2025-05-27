@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Label } from '@/components/ui/label'
+import { CodeBlockWithExport } from '@/components/code-block-with-export'
 import { GlassButton } from './glass-button'
 import { GlassCard } from './glass-card'
 import { GlassInput } from './glass-input'
@@ -90,11 +91,130 @@ export function GlassShowcase() {
                       <span className="bg-background px-2 text-muted-foreground">Code</span>
                     </div>
                   </div>
-                  <pre className="p-4 rounded-lg bg-muted overflow-x-auto">
-                    <code className="text-sm">{`<GlassButton>Default</GlassButton>
+                  <CodeBlockWithExport
+                    code={{
+                      typescript: `<GlassButton>Default</GlassButton>
 <GlassButton variant="ghost">Ghost</GlassButton>
-<GlassButton variant="outline">Outline</GlassButton>`}</code>
-                  </pre>
+<GlassButton variant="outline">Outline</GlassButton>`,
+                      tailwind: `<!-- Default Button -->
+<button class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white/10 text-foreground backdrop-blur-md border border-white/20 hover:bg-white/20 active:bg-white/30 h-10 px-4 py-2">
+  Default
+</button>
+
+<!-- Ghost Button -->
+<button class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-white/10 active:bg-white/20 text-foreground backdrop-blur-sm h-10 px-4 py-2">
+  Ghost
+</button>
+
+<!-- Outline Button -->
+<button class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-white/30 bg-transparent hover:bg-white/10 active:bg-white/20 text-foreground backdrop-blur-sm h-10 px-4 py-2">
+  Outline
+</button>`,
+                      css: `.glass-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  height: 2.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: inherit;
+  backdrop-filter: blur(12px);
+}
+
+.glass-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.glass-button:active {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.glass-button:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--ring-color);
+}
+
+.glass-button:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Ghost variant */
+.glass-button--ghost {
+  border: none;
+  background-color: transparent;
+  backdrop-filter: blur(4px);
+}
+
+.glass-button--ghost:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Outline variant */
+.glass-button--outline {
+  background-color: transparent;
+  border-color: rgba(255, 255, 255, 0.3);
+}`,
+                      scss: `// Glass button styles
+.glass-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  height: 2.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: inherit;
+  backdrop-filter: blur(12px);
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  &:active {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px var(--ring-color);
+  }
+  
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  
+  // Ghost variant
+  &--ghost {
+    border: none;
+    background-color: transparent;
+    backdrop-filter: blur(4px);
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+  
+  // Outline variant
+  &--outline {
+    background-color: transparent;
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+}`
+                    }}
+                  />
                 </div>
 
                 <div className="space-y-4">
@@ -213,8 +333,9 @@ export function GlassShowcase() {
                   </div>
                 </div>
 
-                <pre className="p-4 rounded-lg bg-muted overflow-x-auto">
-                  <code className="text-sm">{`<GlassCard intensity="strong" gradient>
+                <CodeBlockWithExport
+                  code={{
+                    typescript: `<GlassCard intensity="strong" gradient="vibrant">
   <CardHeader>
     <CardTitle>Gradient Glass Card</CardTitle>
     <CardDescription>Strong blur with gradient</CardDescription>
@@ -222,8 +343,117 @@ export function GlassShowcase() {
   <CardContent>
     <p>Enhanced with gradient overlay for additional depth.</p>
   </CardContent>
-</GlassCard>`}</code>
-                </pre>
+</GlassCard>`,
+                    tailwind: `<div class="rounded-lg border bg-white/10 backdrop-blur-xl shadow-lg shadow-black/5 p-6 relative overflow-hidden">
+  <!-- Gradient overlay -->
+  <div class="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 pointer-events-none"></div>
+  
+  <div class="relative z-10">
+    <div class="space-y-1.5">
+      <h3 class="text-2xl font-semibold leading-none tracking-tight">Gradient Glass Card</h3>
+      <p class="text-sm text-muted-foreground">Strong blur with gradient</p>
+    </div>
+    <div class="pt-6">
+      <p>Enhanced with gradient overlay for additional depth.</p>
+    </div>
+  </div>
+</div>`,
+                    css: `.glass-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.glass-card--gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom right,
+    rgba(var(--primary-rgb), 0.2),
+    rgba(var(--secondary-rgb), 0.2),
+    rgba(var(--accent-rgb), 0.2)
+  );
+  pointer-events: none;
+}
+
+.glass-card__content {
+  position: relative;
+  z-index: 10;
+}
+
+.glass-card__header {
+  margin-bottom: 1.5rem;
+}
+
+.glass-card__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.glass-card__description {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  margin-top: 0.375rem;
+}`,
+                    scss: `// Glass card with gradient
+.glass-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  
+  // Gradient variant
+  &--gradient {
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom right,
+        rgba(var(--primary-rgb), 0.2),
+        rgba(var(--secondary-rgb), 0.2),
+        rgba(var(--accent-rgb), 0.2)
+      );
+      pointer-events: none;
+    }
+  }
+  
+  &__content {
+    position: relative;
+    z-index: 10;
+  }
+  
+  &__header {
+    margin-bottom: 1.5rem;
+  }
+  
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.025em;
+  }
+  
+  &__description {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+    margin-top: 0.375rem;
+  }
+}`
+                  }}
+                />
               </div>
             </div>
           </TabsContent>
