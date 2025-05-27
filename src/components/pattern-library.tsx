@@ -17,6 +17,26 @@ import {
   GlassLoginForm,
   GlassDashboardStats
 } from '@/components/patterns/glassmorphism'
+import {
+  AuroraLoginForm,
+  AuroraDashboardStats
+} from '@/components/patterns/aurora'
+import {
+  BrutalismLoginForm,
+  BrutalismDashboardStats
+} from '@/components/patterns/brutalism'
+import {
+  CyberpunkLoginForm,
+  CyberpunkDashboardStats
+} from '@/components/patterns/cyberpunk'
+import {
+  ClayLoginForm,
+  ClayDashboardStats
+} from '@/components/patterns/claymorphism'
+import {
+  MemphisLoginForm,
+  MemphisDashboardStats
+} from '@/components/patterns/memphis'
 import { 
   LogIn, 
   CreditCard, 
@@ -100,9 +120,109 @@ const glassmorphismPatterns: Pattern[] = [
   }
 ]
 
+const auroraPatterns: Pattern[] = [
+  {
+    id: 'login',
+    name: 'Aurora Login Form',
+    description: 'Ethereal login form with gradient effects and northern lights inspired design',
+    icon: LogIn,
+    component: <AuroraLoginForm />,
+    code: `<AuroraLoginForm />`
+  },
+  {
+    id: 'dashboard',
+    name: 'Dashboard Stats',
+    description: 'Cosmic dashboard with gradient overlays and floating stat cards',
+    icon: BarChart3,
+    component: <AuroraDashboardStats />,
+    code: `<AuroraDashboardStats />`
+  }
+]
+
+const brutalismPatterns: Pattern[] = [
+  {
+    id: 'login',
+    name: 'Brutalist Login Form',
+    description: 'Raw, bold login form with heavy borders and stark contrasts',
+    icon: LogIn,
+    component: <BrutalismLoginForm />,
+    code: `<BrutalismLoginForm />`
+  },
+  {
+    id: 'dashboard',
+    name: 'Dashboard Stats',
+    description: 'Bold dashboard with harsh shadows and high contrast metrics',
+    icon: BarChart3,
+    component: <BrutalismDashboardStats />,
+    code: `<BrutalismDashboardStats />`
+  }
+]
+
+const cyberpunkPatterns: Pattern[] = [
+  {
+    id: 'login',
+    name: 'Cyberpunk Login Form',
+    description: 'Futuristic login interface with neon effects and digital aesthetics',
+    icon: LogIn,
+    component: <CyberpunkLoginForm />,
+    code: `<CyberpunkLoginForm />`
+  },
+  {
+    id: 'dashboard',
+    name: 'Dashboard Stats',
+    description: 'High-tech dashboard with glowing metrics and sci-fi interface elements',
+    icon: BarChart3,
+    component: <CyberpunkDashboardStats />,
+    code: `<CyberpunkDashboardStats />`
+  }
+]
+
+const claymorphismPatterns: Pattern[] = [
+  {
+    id: 'login',
+    name: 'Clay Login Form',
+    description: '3D clay-like login form with soft, tactile appearance and depth',
+    icon: LogIn,
+    component: <ClayLoginForm />,
+    code: `<ClayLoginForm />`
+  },
+  {
+    id: 'dashboard',
+    name: 'Dashboard Stats',
+    description: 'Sculpted dashboard with clay-like textures and dimensional stat cards',
+    icon: BarChart3,
+    component: <ClayDashboardStats />,
+    code: `<ClayDashboardStats />`
+  }
+]
+
+const memphisPatterns: Pattern[] = [
+  {
+    id: 'login',
+    name: 'Memphis Login Form',
+    description: 'Playful retro login form with bold patterns and vibrant 80s aesthetics',
+    icon: LogIn,
+    component: <MemphisLoginForm />,
+    code: `<MemphisLoginForm />`
+  },
+  {
+    id: 'dashboard',
+    name: 'Dashboard Stats',
+    description: 'Colorful dashboard with geometric patterns and retro design elements',
+    icon: BarChart3,
+    component: <MemphisDashboardStats />,
+    code: `<MemphisDashboardStats />`
+  }
+]
+
 const patternSets: Record<string, Pattern[]> = {
   neumorphism: neumorphismPatterns,
-  glassmorphism: glassmorphismPatterns
+  glassmorphism: glassmorphismPatterns,
+  aurora: auroraPatterns,
+  brutalism: brutalismPatterns,
+  cyberpunk: cyberpunkPatterns,
+  claymorphism: claymorphismPatterns,
+  memphis: memphisPatterns
 }
 
 export function PatternLibrary({ style = 'neumorphism' }: { style?: string }) {
@@ -194,7 +314,13 @@ export function MyComponent() {
               {/* Live Preview */}
               <div className={cn(
                 "border rounded-xl p-8 lg:p-12 min-h-[600px] flex items-center justify-center overflow-hidden relative",
-                style === 'glassmorphism' ? "bg-gradient-to-br from-purple-600 via-pink-500 to-blue-500" : "bg-[#e0e0e0]"
+                style === 'glassmorphism' ? "bg-gradient-to-br from-purple-600 via-pink-500 to-blue-500" :
+                style === 'aurora' ? "bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900" :
+                style === 'brutalism' ? "bg-white" :
+                style === 'cyberpunk' ? "bg-gradient-to-br from-gray-900 via-black to-gray-800" :
+                style === 'claymorphism' ? "bg-gradient-to-br from-amber-100 to-orange-200" :
+                style === 'memphis' ? "bg-gradient-to-br from-pink-200 via-yellow-100 to-blue-200" :
+                "bg-[#e0e0e0]"
               )}>
                 <div className="w-full flex items-center justify-center">
                   {selectedPattern.component}
