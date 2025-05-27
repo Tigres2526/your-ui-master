@@ -34,17 +34,4 @@ jobs:
         uses: anthropics/claude-code-action@beta
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          allowed_tools: [
-            "Bash(npm install)",
-            "Bash(npm run lint)",
-            "Bash(npm run build)",
-            "Bash(git status)",
-            "Bash(git log)",
-            "Bash(git show)",
-            "Bash(git blame)",
-            "Bash(git diff)",
-            "View",
-            "GlobTool",
-            "GrepTool",
-            "BatchTool"
-          ]
+          allowed_tools: "Bash(npm install),Bash(npm run lint),Bash(npm run build),Bash(git status),Bash(git log),Bash(git diff),View,GlobTool,GrepTool,BatchTool"
